@@ -19,9 +19,9 @@ const PortfolioFooter = () => {
   };
 
   const socialLinks = [
-    { icon: Github, href: 'https://github.com/Rakshan001', label: 'GitHub', color: 'hover:text-gray-400' },
+    { icon: Github, href: 'https://github.com/Rakshan001', label: 'GitHub', color: 'hover:text-gray-300' },
     { icon: Linkedin, href: 'https://linkedin.com/in/rakshan-shetty-953864225', label: 'LinkedIn', color: 'hover:text-blue-400' },
-    { icon: Mail, href: 'mailto:rakshanshetty2003@gmail.com', label: 'Email', color: 'hover:text-red-400' },
+    { icon: Mail, href: 'mailto:rakshanshetty2003@gmail.com', label: 'Email', color: 'hover:text-cyan-400' },
   ];
 
   const quickLinks = [
@@ -38,12 +38,12 @@ const PortfolioFooter = () => {
   ];
 
   return (
-    <footer className="relative bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white overflow-hidden">
+    <footer className="relative bg-gradient-to-br from-black via-gray-900 to-black text-white overflow-hidden">
       {/* Animated Background Elements */}
       <div className="absolute inset-0 opacity-20">
-        <div className="absolute top-0 left-0 w-96 h-96 bg-blue-500/30 rounded-full mix-blend-multiply filter blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-0 right-0 w-96 h-96 bg-purple-500/30 rounded-full mix-blend-multiply filter blur-3xl animate-pulse delay-1000"></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-pink-500/30 rounded-full mix-blend-multiply filter blur-3xl animate-pulse delay-500"></div>
+        <div className="absolute top-0 left-0 w-96 h-96 bg-blue-600/20 rounded-full mix-blend-multiply filter blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-cyan-600/20 rounded-full mix-blend-multiply filter blur-3xl animate-pulse delay-1000"></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-blue-500/15 rounded-full mix-blend-multiply filter blur-3xl animate-pulse delay-500"></div>
       </div>
 
       {/* Main Footer Content */}
@@ -57,7 +57,7 @@ const PortfolioFooter = () => {
             transition={{ duration: 0.6 }}
           >
             <div className="mb-6">
-              <h3 className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+              <h3 className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
                 Rakshan Shetty
               </h3>
               <p className="text-gray-400 mt-2 text-sm leading-relaxed">
@@ -65,12 +65,12 @@ const PortfolioFooter = () => {
               </p>
             </div>
             <div className="space-y-3">
-              <div className="flex items-center space-x-3 text-sm text-gray-400 hover:text-white transition-colors">
+              <div className="flex items-center space-x-3 text-sm text-gray-400 hover:text-gray-300 transition-colors">
                 <MapPin className="w-4 h-4 text-blue-400" />
                 <span>Bantwal, India</span>
               </div>
-              <div className="flex items-center space-x-3 text-sm text-gray-400 hover:text-white transition-colors">
-                <Mail className="w-4 h-4 text-red-400" />
+              <div className="flex items-center space-x-3 text-sm text-gray-400 hover:text-gray-300 transition-colors">
+                <Mail className="w-4 h-4 text-cyan-400" />
                 <span>rakshanshetty2003@gmail.com</span>
               </div>
             </div>
@@ -88,12 +88,12 @@ const PortfolioFooter = () => {
                 <li key={index}>
                   <a
                     href={link.href}
-                    className="text-gray-400 hover:text-white transition-all duration-300 text-sm flex items-center group"
+                    className="text-gray-400 hover:text-blue-300 transition-all duration-300 text-sm flex items-center group"
                   >
                     <span className="group-hover:translate-x-1 transition-transform duration-300">
                       {link.name}
                     </span>
-                    <ExternalLink className="w-3 h-3 ml-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <ExternalLink className="w-3 h-3 ml-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-blue-300" />
                   </a>
                 </li>
               ))}
@@ -112,12 +112,12 @@ const PortfolioFooter = () => {
                 <li key={index}>
                   <a
                     href={service.href}
-                    className="text-gray-400 hover:text-white transition-all duration-300 text-sm flex items-center group"
+                    className="text-gray-400 hover:text-blue-300 transition-all duration-300 text-sm flex items-center group"
                   >
                     <span className="group-hover:translate-x-1 transition-transform duration-300">
                       {service.name}
                     </span>
-                    <ExternalLink className="w-3 h-3 ml-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <ExternalLink className="w-3 h-3 ml-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-blue-300" />
                   </a>
                 </li>
               ))}
@@ -139,7 +139,7 @@ const PortfolioFooter = () => {
                 <a
                   key={index}
                   href={social.href}
-                  className={`w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center ${social.color} transition-all duration-300 hover:scale-110 hover:bg-gray-700`}
+                  className={`w-10 h-10 bg-gray-800/30 rounded-full flex items-center justify-center ${social.color} transition-all duration-300 hover:scale-110 hover:bg-gray-700/20 hover:border hover:border-blue-500/40`}
                   aria-label={social.label}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -152,20 +152,20 @@ const PortfolioFooter = () => {
         </div>
 
         {/* Divider */}
-        <div className="mt-16 pt-8 border-t border-gray-800">
+        <div className="mt-16 pt-8 border-t border-gray-700/50">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             {/* Copyright */}
             <div className="flex items-center space-x-2 text-gray-400 text-sm">
               <span>© {currentYear} Rakshan Shetty. Made with</span>
-              <Heart className="w-4 h-4 text-red-500 animate-pulse" />
+              <Heart className="w-4 h-4 text-cyan-500 animate-pulse" />
               <span>All rights reserved.</span>
             </div>
             {/* Additional Links */}
             <div className="flex space-x-6 text-sm">
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
+              <a href="#" className="text-gray-400 hover:text-blue-300 transition-colors">
                 Privacy Policy
               </a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
+              <a href="#" className="text-gray-400 hover:text-blue-300 transition-colors">
                 Terms of Service
               </a>
             </div>
@@ -176,7 +176,7 @@ const PortfolioFooter = () => {
       {/* Scroll to Top Button */}
       <motion.button
         onClick={scrollToTop}
-        className={`fixed bottom-8 right-8 z-50 w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center ${
+        className={`fixed bottom-8 right-8 z-50 w-12 h-12 bg-gradient-to-r from-blue-600 to-cyan-700 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center ${
           showScrollTop ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'
         }`}
         aria-label="Scroll to top"

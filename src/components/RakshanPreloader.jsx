@@ -1,140 +1,239 @@
 import { useState, useEffect } from 'react';
 
-export default function RakshanPreloader({ onComplete }) {
-  const [loading, setLoading] = useState(true);
+export default function PremiumPreloader({ onComplete }) {
   const [progress, setProgress] = useState(0);
-  const [showName, setShowName] = useState(false);
-  const [letterAnimation, setLetterAnimation] = useState(false);
-  const [fadeOut, setFadeOut] = useState(false);
-
-  const firstName = 'RAKSHAN';
-  const lastName = 'SHETTY';
+  const [stage, setStage] = useState('loading'); // loading, reveal, complete
+  const [glitchActive, setGlitchActive] = useState(false);
 
   useEffect(() => {
+    // Progress simulation
     const progressInterval = setInterval(() => {
       setProgress((prev) => {
         if (prev >= 100) {
           clearInterval(progressInterval);
-          setTimeout(() => setShowName(true), 300);
-          setTimeout(() => setLetterAnimation(true), 800);
-          setTimeout(() => setFadeOut(true), 3500);
+          
+          // Trigger glitch effect
+          setTimeout(() => setGlitchActive(true), 200);
+          setTimeout(() => setGlitchActive(false), 400);
+          
+          // Move to reveal stage
+          setTimeout(() => setStage('reveal'), 800);
+          
+          // Complete and call onComplete
           setTimeout(() => {
-            setLoading(false);
+            setStage('complete');
             onComplete();
-          }, 4500);
+          }, 3200);
+          
           return 100;
         }
-        return prev + 2;
+        return prev + 1;
       });
-    }, 50);
+    }, 30);
 
     return () => clearInterval(progressInterval);
   }, [onComplete]);
 
-  if (!loading) return null;
+  if (stage === 'complete') return null;
 
   return (
-    <div
-      className={`fixed inset-0 bg-black flex items-center justify-center z-50 transition-opacity duration-1000 ${
-        fadeOut ? 'opacity-0' : 'opacity-100'
-      }`}
-    >
-      <div className="absolute inset-0">
-        {[...Array(50)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute w-px bg-gradient-to-b from-transparent via-cyan-400 to-transparent animate-pulse"
-            style={{
-              left: `${Math.random() * 100}%`,
-              height: `${Math.random() * 100 + 50}px`,
-              animationDelay: `${Math.random() * 3}s`,
-              animationDuration: `${2 + Math.random() * 3}s`,
-            }}
-          />
-        ))}
-        <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-cyan-500/20 rounded-full blur-3xl animate-pulse" />
-        <div
-          className="absolute bottom-1/4 right-1/4 w-40 h-40 bg-purple-500/20 rounded-full blur-3xl animate-pulse"
-          style={{ animationDelay: '1s' }}
+    <div className="fixed inset-0 bg-black z-50 overflow-hidden">
+      {/* Animated grid background */}
+      <div className="absolute inset-0 opacity-20">
+        <div 
+          className="absolute inset-0 bg-gradient-to-br from-transparent via-zinc-900/50 to-transparent"
+          style={{
+            backgroundImage: `
+              linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)
+            `,
+            backgroundSize: '40px 40px',
+            animation: 'grid-move 20s linear infinite'
+          }}
         />
       </div>
-      <div className="relative z-10 text-center">
-        {!showName ? (
-          <div className="space-y-8">
-            <div className="w-32 h-32 mx-auto relative">
-              <div className="absolute inset-0 rounded-full border-4 border-gray-800"></div>
-              <div
-                className="absolute inset-0 rounded-full border-4 border-transparent border-t-cyan-400 animate-spin"
-                style={{ animationDuration: '1s' }}
-              ></div>
-              <div className="absolute inset-4 rounded-full border-2 border-gray-700"></div>
-              <div
-                className="absolute inset-4 rounded-full border-2 border-transparent border-t-purple-400 animate-spin"
-                style={{ animationDuration: '1.5s', animationDirection: 'reverse' }}
-              ></div>
-              <div className="absolute inset-0 flex items-center justify-center">
-                <span className="text-2xl font-bold text-white">{progress}%</span>
+
+      {/* Ambient orbs */}
+      <div className="absolute inset-0">
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-72 h-72 bg-pink-500/5 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }} />
+      </div>
+
+      {/* Main content */}
+      <div className="relative z-10 h-full flex items-center justify-center">
+        
+        {stage === 'loading' && (
+          <div className="text-center space-y-12">
+            {/* Logo/Icon */}
+            <div className="relative">
+              <div className="w-24 h-24 mx-auto relative">
+                {/* Outer ring */}
+                <div className="absolute inset-0 rounded-full border-2 border-zinc-800" />
+                
+                {/* Animated progress ring */}
+                <svg className="absolute inset-0 w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                  <circle
+                    cx="50"
+                    cy="50"
+                    r="45"
+                    fill="none"
+                    stroke="rgba(147, 51, 234, 0.3)"
+                    strokeWidth="2"
+                    strokeDasharray={`${progress * 2.83} 283`}
+                    className="transition-all duration-300 ease-out"
+                  />
+                </svg>
+                
+                {/* Inner elements */}
+                <div className="absolute inset-3 rounded-full border border-zinc-700/50" />
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="w-3 h-3 bg-white rounded-full animate-pulse" />
+                </div>
               </div>
-            </div>
-            <div className="text-gray-400 text-lg font-light tracking-widest">INITIALIZING...</div>
-          </div>
-        ) : (
-          <div className="space-y-12">
-            <div className="flex justify-center space-x-2 md:space-x-4">
-              {firstName.split('').map((letter, index) => (
-                <span
-                  key={index}
-                  className={`text-6xl md:text-8xl lg:text-9xl font-black transition-all duration-700 ${
-                    letterAnimation
-                      ? 'transform translate-y-0 opacity-100 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600'
-                      : 'transform translate-y-20 opacity-0 text-white'
-                  }`}
-                  style={{
-                    transitionDelay: `${index * 100}ms`,
-                    textShadow: letterAnimation ? '0 0 30px rgba(59, 130, 246, 0.5)' : 'none',
-                  }}
-                >
-                  {letter}
-                </span>
-              ))}
-            </div>
-            <div className="flex justify-center space-x-2 md:space-x-4">
-              {lastName.split('').map((letter, index) => (
-                <span
-                  key={index}
-                  className={`text-6xl md:text-8xl lg:text-9xl font-black transition-all duration-700 ${
-                    letterAnimation
-                      ? 'transform translate-y-0 opacity-100 text-transparent bg-clip-text bg-gradient-to-r from-purple-600 via-pink-500 to-red-500'
-                      : 'transform translate-y-20 opacity-0 text-white'
-                  }`}
-                  style={{
-                    transitionDelay: `${(firstName.length + index) * 100}ms`,
-                    textShadow: letterAnimation ? '0 0 30px rgba(168, 85, 247, 0.5)' : 'none',
-                  }}
-                >
-                  {letter}
-                </span>
-              ))}
-            </div>
-            <div
-              className={`transition-all duration-1000 ${
-                letterAnimation ? 'opacity-100 transform translate-y-0' : 'opacity-0 transform translate-y-10'
-              }`}
-              style={{ transitionDelay: '1.5s' }}
-            >
-              <div className="text-2xl md:text-3xl text-gray-300 font-light tracking-wider">
-                Portfolio Loading...
-              </div>
-              <div className="mt-4 w-64 h-1 bg-gray-800 rounded-full mx-auto overflow-hidden">
+              
+              {/* Floating particles */}
+              {[...Array(8)].map((_, i) => (
                 <div
-                  className="h-full bg-gradient-to-r from-cyan-400 to-purple-600 rounded-full transition-all duration-300"
-                  style={{ width: `${progress}%` }}
-                ></div>
+                  key={i}
+                  className="absolute w-1 h-1 bg-purple-400 rounded-full animate-ping"
+                  style={{
+                    left: `${50 + 40 * Math.cos((i * Math.PI * 2) / 8)}%`,
+                    top: `${50 + 40 * Math.sin((i * Math.PI * 2) / 8)}%`,
+                    animationDelay: `${i * 0.2}s`,
+                    animationDuration: '2s'
+                  }}
+                />
+              ))}
+            </div>
+
+            {/* Progress info */}
+            <div className="space-y-6">
+              <div className="text-sm text-zinc-500 font-mono tracking-wider">
+                INITIALIZING PORTFOLIO
+              </div>
+              
+              <div className="text-4xl font-light text-white tabular-nums">
+                {progress.toString().padStart(3, '0')}%
+              </div>
+              
+              {/* Progress bar */}
+              <div className="w-80 max-w-sm mx-auto">
+                <div className="h-px bg-zinc-800 rounded-full overflow-hidden">
+                  <div 
+                    className="h-full bg-gradient-to-r from-purple-500 to-blue-500 transition-all duration-300 ease-out"
+                    style={{ width: `${progress}%` }}
+                  />
+                </div>
+                <div className="flex justify-between text-xs text-zinc-600 mt-2">
+                  <span>Loading assets</span>
+                  <span>{Math.round(progress)}%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {stage === 'reveal' && (
+          <div className="text-center">
+            {/* Name reveal animation */}
+            <div className="space-y-4">
+              <div className="overflow-hidden">
+                <h1 className={`text-7xl sm:text-8xl lg:text-9xl font-black tracking-tight transform transition-all duration-1000 ${
+                  glitchActive ? 'glitch' : ''
+                }`}>
+                  <span className="inline-block animate-slide-up text-white" style={{ animationDelay: '0ms' }}>R</span>
+                  <span className="inline-block animate-slide-up text-white" style={{ animationDelay: '100ms' }}>A</span>
+                  <span className="inline-block animate-slide-up text-white" style={{ animationDelay: '200ms' }}>K</span>
+                  <span className="inline-block animate-slide-up text-white" style={{ animationDelay: '300ms' }}>S</span>
+                  <span className="inline-block animate-slide-up text-white" style={{ animationDelay: '400ms' }}>H</span>
+                  <span className="inline-block animate-slide-up text-white" style={{ animationDelay: '500ms' }}>A</span>
+                  <span className="inline-block animate-slide-up text-white" style={{ animationDelay: '600ms' }}>N</span>
+                </h1>
+              </div>
+              
+              <div className="overflow-hidden">
+                <h2 className="text-5xl sm:text-6xl lg:text-7xl font-black tracking-tight">
+                  <span className="inline-block animate-slide-up bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent" style={{ animationDelay: '800ms' }}>S</span>
+                  <span className="inline-block animate-slide-up bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent" style={{ animationDelay: '900ms' }}>H</span>
+                  <span className="inline-block animate-slide-up bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent" style={{ animationDelay: '1000ms' }}>E</span>
+                  <span className="inline-block animate-slide-up bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent" style={{ animationDelay: '1100ms' }}>T</span>
+                  <span className="inline-block animate-slide-up bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent" style={{ animationDelay: '1200ms' }}>T</span>
+                  <span className="inline-block animate-slide-up bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent" style={{ animationDelay: '1300ms' }}>Y</span>
+                </h2>
+              </div>
+            </div>
+
+            {/* Subtitle */}
+            <div className="mt-8 animate-fade-in-up" style={{ animationDelay: '1.5s' }}>
+              <p className="text-zinc-400 text-lg tracking-wide">
+                PORTFOLIO • 2025
+              </p>
+            </div>
+
+            {/* Loading complete indicator */}
+            <div className="mt-12 animate-fade-in-up" style={{ animationDelay: '2s' }}>
+              <div className="inline-flex items-center gap-2 px-4 py-2 bg-zinc-900/50 border border-zinc-800 rounded-full backdrop-blur-sm">
+                <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+                <span className="text-sm text-zinc-400">Ready</span>
               </div>
             </div>
           </div>
         )}
       </div>
+
+      <style jsx>{`
+        @keyframes grid-move {
+          0% { transform: translate(0, 0); }
+          100% { transform: translate(40px, 40px); }
+        }
+        
+        @keyframes slide-up {
+          0% {
+            transform: translateY(100px);
+            opacity: 0;
+          }
+          100% {
+            transform: translateY(0);
+            opacity: 1;
+          }
+        }
+        
+        @keyframes fade-in-up {
+          0% {
+            transform: translateY(20px);
+            opacity: 0;
+          }
+          100% {
+            transform: translateY(0);
+            opacity: 1;
+          }
+        }
+        
+        @keyframes glitch {
+          0%, 100% { transform: translate(0); }
+          20% { transform: translate(-2px, 2px); }
+          40% { transform: translate(-2px, -2px); }
+          60% { transform: translate(2px, 2px); }
+          80% { transform: translate(2px, -2px); }
+        }
+        
+        .animate-slide-up {
+          animation: slide-up 0.8s ease-out forwards;
+          transform: translateY(100px);
+          opacity: 0;
+        }
+        
+        .animate-fade-in-up {
+          animation: fade-in-up 0.8s ease-out forwards;
+          transform: translateY(20px);
+          opacity: 0;
+        }
+        
+        .glitch {
+          animation: glitch 0.3s ease-in-out;
+        }
+      `}</style>
     </div>
   );
 }
