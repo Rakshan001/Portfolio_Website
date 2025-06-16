@@ -10,6 +10,7 @@ import Skill from './pages/Skill';
 import Project from './pages/Projects';
 import Experience from './pages/Experience';
 import Education from './pages/Education';
+import Chatbot from './pages/Chatbot'
 
 
 
@@ -42,10 +43,12 @@ function App() {
                   <Route path="/education" element={<Education />} />
                 </Routes>
               </main>
+              <Chatbot />
               <Footer />
             </div>
           )}
         </AnimatePresence>
+
       </div>
     </Router>
   );
