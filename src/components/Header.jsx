@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
 import { Menu, X, Github, Linkedin, Mail, Download } from 'lucide-react';
 
-export default function PortfolioHeader() {
+export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -15,13 +14,22 @@ export default function PortfolioHeader() {
   }, []);
 
   const navItems = [
-    { name: 'Home', path: '/' },
-    { name: 'About', path: '/about' },
-    { name: 'Skill', path: '/Skill' },
-    { name: 'Project', path: '/projects' },
-    { name: 'Experience', path: '/experience' },
-    { name: 'Education', path: '/education' },
+    { name: 'Home', path: '#home' },
+    { name: 'About', path: '#about' },
+    { name: 'Skills', path: '#skill' },
+    { name: 'Projects', path: '#projects' },
+    { name: 'Experience', path: '#experience' },
+    { name: 'Education', path: '#education' },
   ];
+
+  const handleNavClick = (e, path) => {
+    e.preventDefault();
+    const section = document.querySelector(path);
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth' });
+      setIsMenuOpen(false);
+    }
+  };
 
   return (
     <header
@@ -31,35 +39,28 @@ export default function PortfolioHeader() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 md:h-20">
-          {/* Logo */}
           <div className="flex-shrink-0">
-            <NavLink
-              to="/"
+            <a
+              href="#home"
               className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent hover:scale-105 transition-transform duration-200"
+              onClick={(e) => handleNavClick(e, '#home')}
             >
               Rakshan Shetty
-            </NavLink>
+            </a>
           </div>
-
-          {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
             {navItems.map((item) => (
-              <NavLink
+              <a
                 key={item.name}
-                to={item.path}
-                className={({ isActive }) =>
-                  `text-gray-300 hover:text-blue-400 font-medium transition-colors duration-200 relative group ${
-                    isActive ? 'text-blue-400' : ''
-                  }`
-                }
+                href={item.path}
+                className="text-gray-300 hover:text-blue-400 font-medium transition-colors duration-200 relative group"
+                onClick={(e) => handleNavClick(e, item.path)}
               >
                 {item.name}
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-400 transition-all duration-200 group-hover:w-full"></span>
-              </NavLink>
+              </a>
             ))}
           </nav>
-
-          {/* Social Links & CTA - Desktop */}
           <div className="hidden md:flex items-center space-x-4">
             <a
               href="https://github.com/Rakshan001"
@@ -95,8 +96,6 @@ export default function PortfolioHeader() {
               <span>Resume</span>
             </a>
           </div>
-
-          {/* Mobile menu button */}
           <div className="md:hidden">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -107,8 +106,6 @@ export default function PortfolioHeader() {
             </button>
           </div>
         </div>
-
-        {/* Mobile Navigation */}
         <div
           className={`md:hidden transition-all duration-300 overflow-hidden ${
             isMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
@@ -116,18 +113,14 @@ export default function PortfolioHeader() {
         >
           <div className="py-4 space-y-2 bg-gray-900/90 backdrop-blur-sm rounded-lg mt-2 shadow-lg">
             {navItems.map((item) => (
-              <NavLink
+              <a
                 key={item.name}
-                to={item.path}
-                className={({ isActive }) =>
-                  `block px-4 py-3 text-gray-300 hover:text-blue-400 hover:bg-gray-800/50 transition-all duration-200 font-medium ${
-                    isActive ? 'text-blue-400' : ''
-                  }`
-                }
-                onClick={() => setIsMenuOpen(false)}
+                href={item.path}
+                className="block px-4 py-3 text-gray-300 hover:text-blue-400 hover:bg-gray-800/50 transition-all duration-200 font-medium"
+                onClick={(e) => handleNavClick(e, item.path)}
               >
                 {item.name}
-              </NavLink>
+              </a>
             ))}
             <div className="flex items-center justify-center space-x-6 py-4 border-t border-gray-700/50">
               <a

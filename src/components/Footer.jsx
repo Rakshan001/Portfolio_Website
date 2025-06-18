@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Github, Linkedin, Mail, MapPin, Heart, ArrowUp, ExternalLink } from 'lucide-react';
+import { Github, Linkedin, Mail, MapPin, Heart, ArrowUp } from 'lucide-react';
 
-const PortfolioFooter = () => {
+const Footer = () => {
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
 
@@ -25,31 +25,35 @@ const PortfolioFooter = () => {
   ];
 
   const quickLinks = [
-    { name: 'Home', href: '/' },
-    { name: 'About', href: '/about' },
-    { name: 'Projects', href: '/projects' },
+    { name: 'Home', href: '#home' },
+    { name: 'About', href: '#about' },
+    { name: 'Projects', href: '#projects' },
   ];
 
   const services = [
-    { name: 'Full Stack Development', href: '#' },
-    { name: 'AI/ML Solutions', href: '#' },
-    { name: 'Mobile App Development', href: '#' },
-    { name: 'DevOps & CI/CD', href: '#' },
+    { name: 'Full Stack Development', href: '#services' },
+    { name: 'AI/ML Solutions', href: '#services' },
+    { name: 'Mobile App Development', href: '#services' },
+    { name: 'DevOps & CI/CD', href: '#services' },
   ];
+
+  const handleNavClick = (e, href) => {
+    e.preventDefault();
+    const section = document.querySelector(href);
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   return (
     <footer className="relative bg-gradient-to-br from-black via-gray-900 to-black text-white overflow-hidden">
-      {/* Animated Background Elements */}
       <div className="absolute inset-0 opacity-20">
         <div className="absolute top-0 left-0 w-96 h-96 bg-blue-600/20 rounded-full mix-blend-multiply filter blur-3xl animate-pulse"></div>
         <div className="absolute bottom-0 right-0 w-96 h-96 bg-cyan-600/20 rounded-full mix-blend-multiply filter blur-3xl animate-pulse delay-1000"></div>
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-blue-500/15 rounded-full mix-blend-multiply filter blur-3xl animate-pulse delay-500"></div>
       </div>
-
-      {/* Main Footer Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
-          {/* Brand Section */}
           <motion.div
             className="lg:col-span-1"
             initial={{ opacity: 0, y: 20 }}
@@ -75,8 +79,6 @@ const PortfolioFooter = () => {
               </div>
             </div>
           </motion.div>
-
-          {/* Quick Links */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -88,19 +90,15 @@ const PortfolioFooter = () => {
                 <li key={index}>
                   <a
                     href={link.href}
-                    className="text-gray-400 hover:text-blue-300 transition-all duration-300 text-sm flex items-center group"
+                    onClick={(e) => handleNavClick(e, link.href)}
+                    className="text-gray-400 hover:text-blue-300 transition-all duration-300 text-sm"
                   >
-                    <span className="group-hover:translate-x-1 transition-transform duration-300">
-                      {link.name}
-                    </span>
-                    <ExternalLink className="w-3 h-3 ml-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-blue-300" />
+                    {link.name}
                   </a>
                 </li>
               ))}
             </ul>
           </motion.div>
-
-          {/* Services */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -112,19 +110,15 @@ const PortfolioFooter = () => {
                 <li key={index}>
                   <a
                     href={service.href}
-                    className="text-gray-400 hover:text-blue-300 transition-all duration-300 text-sm flex items-center group"
+                    onClick={(e) => handleNavClick(e, service.href)}
+                    className="text-gray-400 hover:text-blue-300 transition-all duration-300 text-sm"
                   >
-                    <span className="group-hover:translate-x-1 transition-transform duration-300">
-                      {service.name}
-                    </span>
-                    <ExternalLink className="w-3 h-3 ml-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-blue-300" />
+                    {service.name}
                   </a>
                 </li>
               ))}
             </ul>
           </motion.div>
-
-          {/* Social Links */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -150,17 +144,13 @@ const PortfolioFooter = () => {
             </div>
           </motion.div>
         </div>
-
-        {/* Divider */}
         <div className="mt-16 pt-8 border-t border-gray-700/50">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            {/* Copyright */}
             <div className="flex items-center space-x-2 text-gray-400 text-sm">
               <span>© {currentYear} Rakshan Shetty. Made with</span>
               <Heart className="w-4 h-4 text-cyan-500 animate-pulse" />
               <span>All rights reserved.</span>
             </div>
-            {/* Additional Links */}
             <div className="flex space-x-6 text-sm">
               <a href="#" className="text-gray-400 hover:text-blue-300 transition-colors">
                 Privacy Policy
@@ -172,8 +162,6 @@ const PortfolioFooter = () => {
           </div>
         </div>
       </div>
-
-      {/* Scroll to Top Button */}
       <motion.button
         onClick={scrollToTop}
         className={`fixed bottom-8 right-8 z-50 w-12 h-12 bg-gradient-to-r from-blue-600 to-cyan-700 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center ${
@@ -189,4 +177,4 @@ const PortfolioFooter = () => {
   );
 };
 
-export default PortfolioFooter;
+export default Footer;

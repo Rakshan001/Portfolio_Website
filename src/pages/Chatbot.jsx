@@ -1,8 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { 
-  MessageCircle, Send, Mic, MicOff, Volume2, VolumeX, 
-  Bot, User, Zap, Sparkles, Settings, X, Minimize2, Maximize2
-} from 'lucide-react';
+import { MessageCircle, Send, Mic, MicOff, Volume2, VolumeX, Bot, User, Zap, Sparkles, Minimize2, Maximize2 } from 'lucide-react';
 
 const ChatbotSection = () => {
   const [messages, setMessages] = useState([
@@ -13,7 +10,6 @@ const ChatbotSection = () => {
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
     }
   ]);
-  
   const [inputMessage, setInputMessage] = useState('');
   const [isListening, setIsListening] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
@@ -21,13 +17,13 @@ const ChatbotSection = () => {
   const [voiceEnabled, setVoiceEnabled] = useState(true);
   const [soundEnabled, setSoundEnabled] = useState(true);
   const [isVisible, setIsVisible] = useState(false);
-  
+  const [hasInteracted, setHasInteracted] = useState(false); // Track user interaction
+
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
   const sectionRef = useRef(null);
   const chatContainerRef = useRef(null);
 
-  // Dummy responses for the chatbot
   const botResponses = [
     "That's a great question! I'm here to help you with anything related to web development, my projects, or general inquiries.",
     "I'd be happy to assist you with that! Feel free to ask me about React, JavaScript, or any other technologies.",
@@ -57,17 +53,17 @@ const ChatbotSection = () => {
       },
       { threshold: 0.1 }
     );
-
     if (sectionRef.current) {
       observer.observe(sectionRef.current);
     }
-
     return () => observer.disconnect();
   }, []);
 
   useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
+    if (hasInteracted) {
+      scrollToBottom();
+    }
+  }, [messages, hasInteracted]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -86,8 +82,8 @@ const ChatbotSection = () => {
 
     setMessages(prev => [...prev, newMessage]);
     setInputMessage('');
-    
-    // Simulate bot typing
+    setHasInteracted(true); // Mark interaction
+
     setIsTyping(true);
     setTimeout(() => {
       const botResponse = {
@@ -98,8 +94,6 @@ const ChatbotSection = () => {
       };
       setMessages(prev => [...prev, botResponse]);
       setIsTyping(false);
-      
-      // Play notification sound
       if (soundEnabled) {
         playNotificationSound();
       }
@@ -116,8 +110,6 @@ const ChatbotSection = () => {
 
   const startListening = () => {
     setIsListening(true);
-    
-    // Simulate voice recognition
     setTimeout(() => {
       const voiceMessages = [
         "What can you tell me about your projects?",
@@ -126,12 +118,9 @@ const ChatbotSection = () => {
         "Can you help me with JavaScript?",
         "Tell me about your skills"
       ];
-      
       const randomMessage = voiceMessages[Math.floor(Math.random() * voiceMessages.length)];
       setInputMessage(randomMessage);
       setIsListening(false);
-      
-      // Auto-send after a short delay
       setTimeout(() => {
         handleSendMessage(randomMessage);
       }, 500);
@@ -143,7 +132,6 @@ const ChatbotSection = () => {
   };
 
   const playNotificationSound = () => {
-    // Simulate sound playing
     console.log("🔊 Notification sound played");
   };
 
@@ -155,8 +143,7 @@ const ChatbotSection = () => {
   };
 
   return (
-    <section ref={sectionRef} className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black relative overflow-hidden py-20">
-      {/* Animated Background */}
+    <section ref={sectionRef} className="bg-gradient-to-br from-black via-gray-900 to-black relative overflow-hidden py-20">
       <div className="absolute inset-0">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-cyan-500/5 rounded-full blur-3xl animate-pulse"></div>
         <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-blue-500/5 rounded-full blur-3xl animate-pulse delay-1000"></div>
@@ -164,7 +151,6 @@ const ChatbotSection = () => {
       </div>
 
       <div className="relative z-10 container mx-auto px-6">
-        {/* Header */}
         <div className={`text-center mb-16 transform transition-all duration-1000 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
           <div className="inline-block mb-4">
             <span className="px-6 py-3 bg-gradient-to-r from-cyan-600/20 to-blue-600/20 rounded-full text-cyan-300 font-medium border border-cyan-600/30 backdrop-blur-sm">
@@ -179,7 +165,6 @@ const ChatbotSection = () => {
           </p>
         </div>
 
-        {/* Chatbot Container */}
         <div className={`max-w-4xl mx-auto transform transition-all duration-1000 delay-200 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
           <div 
             className={`bg-gray-900/50 backdrop-blur-xl rounded-3xl border transition-all duration-300 ${
@@ -193,7 +178,6 @@ const ChatbotSection = () => {
                 : 'none'
             }}
           >
-            {/* Chat Header */}
             <div className="flex items-center justify-between p-4 bg-gray-800/50 border-b border-gray-700/50">
               <div className="flex items-center gap-3">
                 <div className="relative">
@@ -209,7 +193,6 @@ const ChatbotSection = () => {
                   </p>
                 </div>
               </div>
-              
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => setSoundEnabled(!soundEnabled)}
@@ -226,7 +209,6 @@ const ChatbotSection = () => {
               </div>
             </div>
 
-            {/* Chat Messages */}
             {!isMinimized && (
               <>
                 <div 
@@ -257,8 +239,6 @@ const ChatbotSection = () => {
                       </div>
                     </div>
                   ))}
-                  
-                  {/* Typing Indicator */}
                   {isTyping && (
                     <div className="flex justify-start animate-fade-in">
                       <div className="max-w-xs lg:max-w-md px-4 py-3 rounded-2xl bg-gradient-to-r from-gray-800 to-gray-700 text-white">
@@ -273,11 +253,9 @@ const ChatbotSection = () => {
                       </div>
                     </div>
                   )}
-                  
                   <div ref={messagesEndRef} />
                 </div>
 
-                {/* Quick Questions */}
                 <div className="px-4 py-2 border-t border-gray-700/50">
                   <div className="flex flex-wrap gap-2">
                     {quickQuestions.slice(0, 3).map((question, index) => (
@@ -292,7 +270,6 @@ const ChatbotSection = () => {
                   </div>
                 </div>
 
-                {/* Input Area */}
                 <div className="p-4 bg-gray-800/30 border-t border-gray-700/50">
                   {isListening && (
                     <div className="mb-3 flex items-center justify-center gap-2 text-cyan-400">
@@ -306,7 +283,6 @@ const ChatbotSection = () => {
                       <span className="text-sm font-medium">Listening...</span>
                     </div>
                   )}
-                  
                   <div className="flex items-center gap-3">
                     <div className="flex-1 relative">
                       <input
@@ -318,10 +294,9 @@ const ChatbotSection = () => {
                         placeholder="Type your message or use voice..."
                         className="w-full px-4 py-3 bg-gray-700/50 text-white rounded-2xl border border-gray-600/50 focus:border-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/20 transition-all"
                         disabled={isListening}
+                        autoFocus={false} // Disable auto-focus
                       />
                     </div>
-                    
-                    {/* Voice Button */}
                     <button
                       onClick={handleVoiceClick}
                       disabled={!voiceEnabled}
@@ -336,14 +311,10 @@ const ChatbotSection = () => {
                       ) : (
                         <Mic className="w-5 h-5" />
                       )}
-                      
-                      {/* Ripple Effect */}
                       {isListening && (
                         <div className="absolute inset-0 rounded-2xl animate-ping bg-gradient-to-r from-cyan-400 to-blue-500 opacity-75"></div>
                       )}
                     </button>
-                    
-                    {/* Send Button */}
                     <button
                       onClick={() => handleSendMessage()}
                       disabled={!inputMessage.trim() || isListening}
@@ -358,7 +329,6 @@ const ChatbotSection = () => {
           </div>
         </div>
 
-        {/* Features */}
         <div className={`mt-16 transform transition-all duration-1000 delay-400 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
@@ -395,8 +365,6 @@ const ChatbotSection = () => {
           </div>
         </div>
       </div>
-
-      {/* Floating Particles */}
       {['🤖', '💬', '🎤', '✨', '💡', '🚀'].map((emoji, i) => (
         <div
           key={i}

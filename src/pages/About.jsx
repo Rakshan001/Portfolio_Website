@@ -81,7 +81,7 @@ export default function About() {
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
               <a
-                href="/projects"
+                href="#projects"
                 className="group relative px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-700 rounded-full text-white font-semibold text-lg overflow-hidden transition-all duration-300 hover:shadow-2xl hover:shadow-blue-600/25 hover:scale-105"
               >
                 <span className="relative z-10 flex items-center gap-2">
@@ -124,7 +124,7 @@ export default function About() {
             <motion.img
               src={aboutImg}
               alt="Rakshan Shetty"
-              className="w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 object-cover rounded-full border-4 border-blue-600/20 shadow-xl shadow-blue-600/10"
+              className="relative w-72 h-72 sm:w-80 sm:h-80 lg:w-[400px] lg:h-[400px] object-cover rounded-full border-4 border-blue-600/30 shadow-2xl shadow-blue-600/20"
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8, delay: 0.2 }}
