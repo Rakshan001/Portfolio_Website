@@ -3,19 +3,14 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import RakshanPreloader from './components/RakshanPreloader';
 import Header from './components/Header';
-import Footer from './components/Footer'
+import Footer from './components/Footer';
 import Home from './pages/Home';
 import About from './pages/About';
 import Skill from './pages/Skill';
 import Project from './pages/Projects';
 import Experience from './pages/Experience';
 import Education from './pages/Education';
-import Chatbot from './pages/Chatbot'
-
-
-
-
-
+import Chatbot from './pages/Chatbot';
 
 function App() {
   const [showPreloader, setShowPreloader] = useState(true);
@@ -48,7 +43,6 @@ function App() {
             </div>
           )}
         </AnimatePresence>
-
       </div>
     </Router>
   );

@@ -69,101 +69,121 @@ const ExperienceSection = () => {
   };
 
   const experiences = [
-    {
-      id: 1,
-      role: "Full Stack Developer Intern",
-      company: "TechCorp Solutions",
-      location: "Bangalore, India",
-      duration: "Jun 2024 - Dec 2024",
-      type: "Internship",
-      description: "Developed and deployed scalable web applications using React and Node.js. Collaborated with cross-functional teams to deliver high-quality software solutions.",
-      achievements: [
-        "Built 3 production-ready web applications serving 500+ users",
-        "Optimized database queries resulting in 40% faster load times",
-        "Implemented CI/CD pipelines reducing deployment time by 60%",
-        "Mentored 2 junior interns in modern web development practices"
-      ],
-      technologies: ["React", "Node.js", "MongoDB", "AWS", "Docker", "Git"],
-      logo: "🏢",
-      color: "from-blue-500 to-cyan-500",
-      impact: { users: "500+", performance: "+40%", deployment: "60%" }
-    },
-    {
-      id: 2,
-      role: "AI/ML Research Assistant",
-      company: "University Research Lab",
-      location: "Karnataka, India",
-      duration: "Jan 2024 - May 2024",
-      type: "Research",
-      description: "Conducted research on deep learning models for computer vision applications. Published findings and presented at technical conferences.",
-      achievements: [
-        "Developed CNN model achieving 95% accuracy on image classification",
-        "Co-authored research paper accepted at IEEE conference",
-        "Created dataset of 10,000+ labeled images for training",
-        "Presented findings at 3 national-level technical symposiums"
-      ],
-      technologies: ["Python", "TensorFlow", "PyTorch", "OpenCV", "Jupyter", "NumPy"],
-      logo: "🧠",
-      color: "from-purple-500 to-pink-500",
-      impact: { accuracy: "95%", papers: "1", conferences: "3" }
-    },
-    {
-      id: 3,
-      role: "Freelance Web Developer",
-      company: "Independent Contractor",
-      location: "Remote",
-      duration: "Aug 2023 - Present",
-      type: "Freelance",
-      description: "Providing web development services to small businesses and startups. Specializing in modern web technologies and responsive design.",
-      achievements: [
-        "Delivered 8+ complete websites for various clients",
-        "Maintained 98% client satisfaction rate with on-time delivery",
-        "Generated $5,000+ in revenue through freelance projects",
-        "Built long-term relationships with 5 recurring clients"
-      ],
-      technologies: ["React", "Next.js", "Tailwind CSS", "WordPress", "Figma", "Vercel"],
-      logo: "💼",
-      color: "from-green-500 to-emerald-500",
-      impact: { projects: "8+", satisfaction: "98%", revenue: "$5K+" }
-    },
-    {
-      id: 4,
-      role: "Technical Team Lead",
-      company: "College Tech Club",
-      location: "Karnataka, India",
-      duration: "Jul 2023 - Apr 2024",
-      type: "Leadership",
-      description: "Led a team of 15 students in organizing technical events and hackathons. Managed project development and mentored junior members.",
-      achievements: [
-        "Organized 4 successful hackathons with 200+ participants",
-        "Led development of club's official website and mobile app",
-        "Conducted 12 technical workshops on modern web technologies",
-        "Increased club membership by 150% during tenure"
-      ],
-      technologies: ["React", "Firebase", "Node.js", "MongoDB", "Flutter", "Git"],
-      logo: "👥",
-      color: "from-orange-500 to-red-500",
-      impact: { events: "4", participants: "200+", growth: "150%" }
-    },
-    {
-      id: 5,
-      role: "Software Development Intern",
-      company: "StartupXYZ",
-      location: "Mumbai, India",
-      duration: "May 2023 - Jul 2023",
-      type: "Internship",
-      description: "Worked on mobile app development and API integration. Gained experience in agile development methodologies and startup culture.",
-      achievements: [
-        "Contributed to mobile app with 1,000+ downloads",
-        "Integrated 5+ third-party APIs for enhanced functionality",
-        "Reduced app crash rate by 35% through bug fixes",
-        "Participated in daily standups and sprint planning sessions"
-      ],
-      technologies: ["React Native", "Express.js", "PostgreSQL", "REST APIs", "Postman"],
-      logo: "📱",
-      color: "from-indigo-500 to-purple-500",
-      impact: { downloads: "1K+", apis: "5+", stability: "+35%" }
+    
+  {
+    "id": 1,
+    "role": "Software Development Engineer",
+    "company": "Dregal | Durgasoft",
+    "location": "Urwa Store, Mangalore, India",
+    "duration": "May 2025 - Present",
+    "type": "Full-Time",
+    "description": "Developed and deployed scalable web and mobile applications using React, React Native, and Node.js. Collaborated with cross-functional teams to deliver high-quality, user-centric software solutions.",
+    "achievements": [
+      "Built three production-ready web applications serving over 500 users",
+      "Optimized database queries, reducing load times by 40%",
+      "Implemented CI/CD pipelines, decreasing deployment time by 60%",
+      "Developed a React Native mobile app with integrated chat and video calling features"
+    ],
+    "technologies": ["React", "React Native", "Node.js", "Express", "MongoDB", "AWS", "Docker", "Git"],
+    logo: "🏢",
+    "color": "from-blue-500 to-cyan-500",
+    "impact": {
+      "usersServed": 500,
+      "performanceImprovement": "40%",
+      "deploymentTimeReduction": "60%"
     }
+  },
+  {
+    "id": 2,
+    "role": "AI/ML Development Intern",
+    "company": "Accolade Tech Solutions",
+    "location": "Mangalore, India",
+    "duration": "January 2025 - May 2025",
+    "type": "Internship",
+    "description": "Conducted research on deep learning models for computer vision applications. Developed full-stack solutions and mobile applications, contributing to government and client projects.",
+    "achievements": [
+      "Developed machine learning models achieving 95% prediction accuracy",
+      "Built full-stack web applications tailored to client requirements",
+      "Created a voice-powered voting system for visually impaired users",
+      "Collaborated with the Flutter team to deploy a web-based project as a mobile app"
+    ],
+    "technologies": ["Python", "TensorFlow", "PyTorch", "OpenCV", "Jupyter Notebook", "HTML", "CSS", "JavaScript", "Flask", "MySQL", "Flutter"],
+    logo: "🏢",
+    "color": "from-purple-500 to-pink-500",
+    "impact": {
+      "modelAccuracy": "95%",
+      "projectsCompleted": 3,
+      "projectsContributed": 4
+    }
+  },
+  {
+    "id": 3,
+    "role": "AI/ML Development Intern",
+    "company": "Entertainment Technologists",
+    "location": "Remote",
+    "duration": "September 2024 - November 2024",
+    "type": "Internship",
+    "description": "Contributed to machine learning projects by leveraging open-source models. Enhanced web interfaces and optimized model performance during a three-month internship.",
+    "achievements": [
+      "Redesigned web interfaces with modern UI/UX principles",
+      "Improved model performance by 70% through advanced open-source models",
+      "Added multilingual result download functionality based on user preferences",
+      "Completed the assigned project within the three-month timeline"
+    ],
+    "technologies": ["Python", "Flask", "HTML", "CSS", "JavaScript", "Open Source Models"],
+    logo: "🏢",
+
+    "color": "from-green-500 to-emerald-500",
+    "impact": {
+      "projectsCompleted": 1,
+      "performanceImprovement": "70%",
+      "userSatisfaction": "98%"
+    }
+  },
+  {
+    "id": 4,
+    "role": "Full Stack Developer & Lead",
+    "company": "College Alumni Club",
+    "location": "Karnataka, India",
+    "duration": "November 2024 - February 2025",
+    "type": "Leadership",
+    "description": "Led the development of an alumni portal to connect students and alumni, focusing on robust backend architecture and performance optimization.",
+    "achievements": [
+      "Designed and developed the entire backend system using Django and MySQL",
+      "Implemented database triggers to enhance data management efficiency",
+      "Reduced website latency by optimizing caching strategies",
+      "Delivered a scalable portal supporting 200+ active users"
+    ],
+    "technologies": ["HTML", "CSS", "JavaScript", "Django", "MySQL", "Git", "GitHub", "Oracle"],
+     logo: "👥",
+
+
+    "color": "from-orange-500 to-red-500",
+    "impact": {
+      "usersSupported": "2000+",
+      "eventsOrganized": 4,
+      "communityGrowth": "150%"
+    }
+  },
+  // {
+  //     id: 5,
+  //     role: "Software Development Intern",
+  //     company: "StartupXYZ",
+  //     location: "Mumbai, India",
+  //     duration: "May 2023 - Jul 2023",
+  //     type: "Internship",
+  //     description: "Worked on mobile app development and API integration. Gained experience in agile development methodologies and startup culture.",
+  //     achievements: [
+  //       "Contributed to mobile app with 1,000+ downloads",
+  //       "Integrated 5+ third-party APIs for enhanced functionality",
+  //       "Reduced app crash rate by 35% through bug fixes",
+  //       "Participated in daily standups and sprint planning sessions"
+  //     ],
+  //     technologies: ["React Native", "Express.js", "PostgreSQL", "REST APIs", "Postman"],
+  //     logo: "📱",
+  //     color: "from-indigo-500 to-purple-500",
+  //     impact: { downloads: "1K+", apis: "5+", stability: "+35%" }
+  //   }
   ];
 
   const ExperienceDetails = ({ exp, index }) => (
@@ -501,10 +521,10 @@ const ExperienceSection = () => {
         <div className={`mt-16 transform transition-all duration-1000 delay-600 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
             {[
-              { label: 'Total Experience', value: '2+ Years', icon: '⏱️' },
-              { label: 'Projects Delivered', value: '15+', icon: '🚀' },
-              { label: 'Technologies Mastered', value: '20+', icon: '💻' },
-              { label: 'Team Collaborations', value: '5+', icon: '👥' }
+              { label: 'Total Experience', value: '9+ Month', icon: '⏱️' },
+              { label: 'Projects Delivered', value: '5+', icon: '🚀' },
+              { label: 'Technologies Mastered', value: '10+', icon: '💻' },
+              { label: 'Team Collaborations', value: '4+', icon: '👥' }
             ].map((stat, index) => (
               <div
                 key={stat.label}

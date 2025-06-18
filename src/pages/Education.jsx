@@ -5,21 +5,21 @@ export default function Education() {
   const educationHistory = [
     {
       degree: 'Bachelor of Engineering in Computer Science (AIML)',
-      institution: 'XYZ University, Bantwal, India',
+      institution: 'Canara Engineering College, Mangalore, India',
       duration: '2021 - 2025',
-      description: 'Graduated with a focus on Artificial Intelligence and Machine Learning, achieving a CGPA of 8.5/10. Completed projects in web development and intelligent systems.',
+      description: 'Graduated with a focus on Artificial Intelligence and Machine Learning, achieving a CGPA of 8.5/10. ',
     },
     {
       degree: 'Higher Secondary Education (12th Grade)',
-      institution: 'ABC Pre-University College, Mangalore, India',
+      institution: 'S.V.S PU College, Bantwal, India',
       duration: '2019 - 2021',
-      description: 'Completed with a focus on Physics, Chemistry, and Mathematics, securing 92% in board examinations.',
+      description: 'Completed with a focus on Physics, Chemistry, and Mathematics, securing 83.5% in board examinations.',
     },
     {
       degree: 'Secondary School Certificate (10th Grade)',
-      institution: 'DEF High School, Bantwal, India',
+      institution: 'Govt. High School, Bantwal, India',
       duration: '2018 - 2019',
-      description: 'Graduated with a 95% score, excelling in Mathematics and Science.',
+      description: 'Graduated with a 87.2% score, excelling in Mathematics and Science.',
     },
   ];
 
