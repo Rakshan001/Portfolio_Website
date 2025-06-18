@@ -1,167 +1,267 @@
 import { useState, useEffect } from 'react';
-import { Menu, X, Github, Linkedin, Mail, Download } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Menu, X, Github, Linkedin, Mail, Download, Sparkles } from 'lucide-react';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState('home');
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
+
+      // Update active section
+      const sections = ['home', 'about', 'skill', 'projects', 'experience', 'education'];
+      const scrollPos = window.scrollY + window.innerHeight * 0.3; // Adjust for mobile
+
+      for (const section of sections) {
+        const element = document.getElementById(section);
+        if (element) {
+          const { offsetTop, offsetHeight } = element;
+          if (scrollPos >= offsetTop && scrollPos < offsetTop + offsetHeight) {
+            setActiveSection(section);
+            break;
+          }
+        }
+      }
     };
-    window.addEventListener('scroll', handleScroll);
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const navItems = [
-    { name: 'Home', path: '#home' },
-    { name: 'About', path: '#about' },
-    { name: 'Skills', path: '#skill' },
-    { name: 'Projects', path: '#projects' },
-    { name: 'Experience', path: '#experience' },
-    { name: 'Education', path: '#education' },
+    { name: 'Home', path: '#home', id: 'home' },
+    { name: 'About', path: '#about', id: 'about' },
+    { name: 'Skills', path: '#skill', id: 'skill' },
+    { name: 'Projects', path: '#projects', id: 'projects' },
+    { name: 'Experience', path: '#experience', id: 'experience' },
+    { name: 'Education', path: '#education', id: 'education' },
   ];
 
   const handleNavClick = (e, path) => {
     e.preventDefault();
-    const section = document.querySelector(path);
-    if (section) {
-      section.scrollIntoView({ behavior: 'smooth' });
-      setIsMenuOpen(false);
-    }
+    setIsMenuOpen(false); // Close menu first
+    setTimeout(() => {
+      const section = document.querySelector(path);
+      if (section) {
+        const offset = section.getBoundingClientRect().top + window.scrollY - 80; // Adjust for header
+        window.scrollTo({ top: offset, behavior: 'smooth' });
+      }
+    }, 300); // Delay to allow menu animation
   };
 
+  const socialLinks = [
+    { icon: Github, href: 'https://github.com/Rakshan001', label: 'GitHub', color: 'hover:text-gray-300 hover:bg-gray-700/30' },
+    { icon: Linkedin, href: 'https://linkedin.com/in/rakshan-shetty-953864225', label: 'LinkedIn', color: 'hover:text-blue-400 hover:bg-blue-500/20' },
+    { icon: Mail, href: 'mailto:rakshanshetty2003@gmail.com', label: 'Email', color: 'hover:text-cyan-400 hover:bg-cyan-500/20' },
+  ];
+
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-gray-900/80 backdrop-blur-md shadow-lg' : 'bg-transparent'
+    <motion.header
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        isScrolled ? 'bg-black/20 backdrop-blur-xl border-b border-white/10 shadow-2xl shadow-black/20' : 'bg-transparent'
       }`}
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 0.8, ease: 'easeOut' }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 md:h-20">
-          <div className="flex-shrink-0">
-            <a
-              href="#home"
-              className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent hover:scale-105 transition-transform duration-200"
-              onClick={(e) => handleNavClick(e, '#home')}
-            >
-              Rakshan Shetty
+          {/* Logo */}
+          <motion.div className="flex-shrink-0" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+            <a href="#home" className="relative group" onClick={(e) => handleNavClick(e, '#home')}>
+              <motion.div
+                className="absolute -inset-2 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 rounded-xl blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                whileHover={{ scale: 1.1 }}
+              />
+              {/* <div className="relative flex items-center space-x-2 px-3 py-2 rounded-xl bg-gradient-to-r from-gray-800/30 to-gray-900/30 backdrop-blur-sm border border-white/10">
+                <Sparkles className="w-5 h-5 text-blue-400" />
+                <span className="text-lg md:text-xl font-bold bg-gradient-to-r from-blue-400 via-cyan-400 to-purple-400 bg-clip-text text-transparent">
+                  Rakshan Shetty
+                </span>
+              </div> */}
+              <span className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-400 via-cyan-400 to-purple-400 bg-clip-text text-transparent ml-0 pl-0">
+  Rakshan Shetty
+</span>
+
             </a>
-          </div>
-          <nav className="hidden md:flex items-center space-x-8">
-            {navItems.map((item) => (
-              <a
-                key={item.name}
-                href={item.path}
-                className="text-gray-300 hover:text-blue-400 font-medium transition-colors duration-200 relative group"
-                onClick={(e) => handleNavClick(e, item.path)}
-              >
-                {item.name}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-400 transition-all duration-200 group-hover:w-full"></span>
-              </a>
-            ))}
+          </motion.div>
+
+          {/* Desktop Navigation */}
+          <nav className="hidden lg:flex items-center">
+            <div className="flex items-center space-x-1 bg-black/20 backdrop-blur-xl rounded-full px-2 py-2 border border-white/10">
+              {navItems.map((item) => (
+                <motion.a
+                  key={item.name}
+                  href={item.path}
+                  className={`relative px-4 py-2 rounded-full font-medium transition-all duration-300 ${
+                    activeSection === item.id
+                      ? 'text-white bg-gradient-to-r from-blue-500/30 to-cyan-500/30 border border-blue-400/30'
+                      : 'text-gray-300 hover:text-white hover:bg-white/10'
+                  }`}
+                  onClick={(e) => handleNavClick(e, item.path)}
+                  onTouchStart={(e) => handleNavClick(e, item.path)} // Add touch support
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  {item.name}
+                  {activeSection === item.id && (
+                    <motion.div
+                      className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 rounded-full border border-blue-400/40"
+                      layoutId="activeTab"
+                      transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }}
+                    />
+                  )}
+                </motion.a>
+              ))}
+            </div>
           </nav>
-          <div className="hidden md:flex items-center space-x-4">
-            <a
-              href="https://github.com/Rakshan001"
-              className="text-gray-400 hover:text-gray-300 transition-colors duration-200 hover:scale-110 transform"
-              aria-label="GitHub"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Github size={20} />
-            </a>
-            <a
-              href="https://linkedin.com/in/rakshan-shetty-953864225"
-              className="text-gray-400 hover:text-blue-400 transition-colors duration-200 hover:scale-110 transform"
-              aria-label="LinkedIn"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Linkedin size={20} />
-            </a>
-            <a
-              href="mailto:rakshanshetty2003@gmail.com"
-              className="text-gray-400 hover:text-cyan-400 transition-colors duration-200 hover:scale-110 transform"
-              aria-label="Email"
-            >
-              <Mail size={20} />
-            </a>
-            <a
+
+          {/* Desktop Social & Resume */}
+          <div className="hidden lg:flex items-center space-x-3">
+            <div className="flex items-center space-x-2 bg-black/20 backdrop-blur-xl rounded-full px-3 py-2 border border-white/10">
+              {socialLinks.map((social, index) => (
+                <motion.a
+                  key={index}
+                  href={social.href}
+                  className={`p-2 rounded-full text-gray-400 ${social.color} transition-all duration-300 border border-transparent hover:border-white/20`}
+                  aria-label={social.label}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ scale: 1.1, y: -2 }}
+                  whileTap={{ scale: 0.9 }}
+                >
+                  <social.icon size={18} />
+                </motion.a>
+              ))}
+            </div>
+            <motion.a
               href="/resume/Rakshan_Shetty_Resume.pdf"
-              className="ml-4 bg-gradient-to-r from-blue-600 to-cyan-700 text-white px-6 py-2 rounded-full font-medium hover:shadow-lg hover:scale-105 transition-all duration-200 flex items-center space-x-2"
+              className="relative group overflow-hidden"
               download
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
             >
-              <Download size={16} />
-              <span>Resume</span>
-            </a>
-          </div>
-          <div className="md:hidden">
-            <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="text-gray-300 hover:text-blue-400 transition-colors duration-200"
-              aria-label="Toggle menu"
-            >
-              {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
-          </div>
-        </div>
-        <div
-          className={`md:hidden transition-all duration-300 overflow-hidden ${
-            isMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
-          }`}
-        >
-          <div className="py-4 space-y-2 bg-gray-900/90 backdrop-blur-sm rounded-lg mt-2 shadow-lg">
-            {navItems.map((item) => (
-              <a
-                key={item.name}
-                href={item.path}
-                className="block px-4 py-3 text-gray-300 hover:text-blue-400 hover:bg-gray-800/50 transition-all duration-200 font-medium"
-                onClick={(e) => handleNavClick(e, item.path)}
-              >
-                {item.name}
-              </a>
-            ))}
-            <div className="flex items-center justify-center space-x-6 py-4 border-t border-gray-700/50">
-              <a
-                href="https://github.com/Rakshan001"
-                className="text-gray-400 hover:text-gray-300 transition-colors duration-200"
-                aria-label="GitHub"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Github size={24} />
-              </a>
-              <a
-                href="https://linkedin.com/in/rakshan-shetty-953864225"
-                className="text-gray-400 hover:text-blue-400 transition-colors duration-200"
-                aria-label="LinkedIn"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Linkedin size={24} />
-              </a>
-              <a
-                href="mailto:rakshanshetty2003@gmail.com"
-                className="text-gray-400 hover:text-cyan-400 transition-colors duration-200"
-                aria-label="Email"
-              >
-                <Mail size={24} />
-              </a>
-            </div>
-            <div className="px-4 pb-2">
-              <a
-                href="/resume/Rakshan_Shetty_Resume.pdf"
-                className="w-full bg-gradient-to-r from-blue-600 to-cyan-700 text-white py-3 rounded-full font-medium hover:shadow-lg transition-all duration-200 flex items-center justify-center space-x-2"
-                download
-              >
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-full blur-lg opacity-70 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="relative bg-gradient-to-r from-blue-600 to-cyan-600 text-white px-6 py-2.5 rounded-full font-medium flex items-center space-x-2 border border-white/20 backdrop-blur-sm">
                 <Download size={16} />
-                <span>Download Resume</span>
-              </a>
-            </div>
+                <span>Resume</span>
+              </div>
+            </motion.a>
           </div>
+
+          {/* Mobile Menu Button */}
+          <motion.button
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className="lg:hidden relative p-2 rounded-full bg-black/20 backdrop-blur-xl border border-white/10 text-gray-300 hover:text-white transition-colors duration-300"
+            aria-label="Toggle menu"
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+          >
+            <AnimatePresence mode="wait">
+              {isMenuOpen ? (
+                <motion.div
+                  key="close"
+                  initial={{ rotate: -90, opacity: 0 }}
+                  animate={{ rotate: 0, opacity: 1 }}
+                  exit={{ rotate: 90, opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <X size={24} />
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="menu"
+                  initial={{ rotate: 90, opacity: 0 }}
+                  animate={{ rotate: 0, opacity: 1 }}
+                  exit={{ rotate: -90, opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <Menu size={24} />
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </motion.button>
         </div>
+
+        {/* Mobile Menu */}
+        <AnimatePresence>
+          {isMenuOpen && (
+            <motion.div
+              className="lg:hidden mt-2 absolute left-0 right-0 mx-4"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.3, ease: 'easeInOut' }}
+            >
+              <div className="bg-black/50 backdrop-blur-2xl rounded-2xl border border-white/10 shadow-2xl overflow-hidden">
+                <div className="p-4 space-y-2">
+                  {navItems.map((item, index) => (
+                    <motion.a
+                      key={item.name}
+                      href={item.path}
+                      className={`block px-4 py-3 rounded-xl font-medium transition-all duration-300 ${
+                        activeSection === item.id
+                          ? 'text-white bg-gradient-to-r from-blue-500/30 to-cyan-500/30 border border-blue-400/30'
+                          : 'text-gray-300 hover:text-white hover:bg-white/10'
+                      }`}
+                      onClick={(e) => handleNavClick(e, item.path)}
+                      onTouchStart={(e) => handleNavClick(e, item.path)} // Add touch support
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: index * 0.1 }}
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                    >
+                      {item.name}
+                    </motion.a>
+                  ))}
+                </div>
+                <div className="h-px bg-gradient-to-r from-transparent via-white/20 to-transparent mx-4" />
+                <div className="p-4">
+                  <div className="flex items-center justify-center space-x-4 mb-4">
+                    {socialLinks.map((social, index) => (
+                      <motion.a
+                        key={index}
+                        href={social.href}
+                        className={`p-3 rounded-xl ${social.color} border border-white/10 backdrop-blur-sm transition-all duration-300`}
+                        aria-label={social.label}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ delay: 0.4 + index * 0.1 }}
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                      >
+                        <social.icon size={20} />
+                      </motion.a>
+                    ))}
+                  </div>
+                  <motion.a
+                    href="/resume/Rakshan_Shetty_Resume.pdf"
+                    className="relative group w-full overflow-hidden rounded-xl"
+                    download
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.6 }}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-xl blur-lg opacity-70 group-hover:opacity-100 transition-opacity duration-300" />
+                    <div className="relative bg-gradient-to-r from-blue-600 to-cyan-600 text-white py-3 rounded-xl font-medium flex items-center justify-center space-x-2 border border-white/20 backdrop-blur-sm">
+                      <Download size={18} />
+                      <span>Download Resume</span>
+                    </div>
+                  </motion.a>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
-    </header>
+    </motion.header>
   );
 }
