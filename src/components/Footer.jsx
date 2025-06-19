@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
 import { Github, Linkedin, Mail, MapPin, Heart, ArrowUp } from 'lucide-react';
 
 const Footer = () => {
@@ -47,19 +46,17 @@ const Footer = () => {
 
   return (
     <footer className="relative bg-gradient-to-br from-black via-gray-900 to-black text-white overflow-hidden">
+      {/* Animated background elements */}
       <div className="absolute inset-0 opacity-20">
         <div className="absolute top-0 left-0 w-96 h-96 bg-blue-600/20 rounded-full mix-blend-multiply filter blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-0 right-0 w-96 h-96 bg-cyan-600/20 rounded-full mix-blend-multiply filter blur-3xl animate-pulse delay-1000"></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-blue-500/15 rounded-full mix-blend-multiply filter blur-3xl animate-pulse delay-500"></div>
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-cyan-600/20 rounded-full mix-blend-multiply filter blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-blue-500/15 rounded-full mix-blend-multiply filter blur-3xl animate-pulse" style={{ animationDelay: '0.5s' }}></div>
       </div>
+
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
-          <motion.div
-            className="lg:col-span-1"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
+          {/* About Section */}
+          <div className="lg:col-span-1 opacity-0 animate-[fadeInUp_0.6s_ease-out_forwards]">
             <div className="mb-6">
               <h3 className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
                 Rakshan Shetty
@@ -78,12 +75,10 @@ const Footer = () => {
                 <span>rakshanshetty2003@gmail.com</span>
               </div>
             </div>
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-          >
+          </div>
+
+          {/* Quick Links */}
+          <div className="opacity-0 animate-[fadeInUp_0.6s_ease-out_0.1s_forwards]">
             <h4 className="text-lg font-semibold mb-6 text-white">Quick Links</h4>
             <ul className="space-y-3">
               {quickLinks.map((link, index) => (
@@ -91,19 +86,17 @@ const Footer = () => {
                   <a
                     href={link.href}
                     onClick={(e) => handleNavClick(e, link.href)}
-                    className="text-gray-400 hover:text-blue-300 transition-all duration-300 text-sm"
+                    className="text-gray-400 hover:text-blue-300 transition-all duration-300 text-sm hover:translate-x-1"
                   >
                     {link.name}
                   </a>
                 </li>
               ))}
             </ul>
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
+          </div>
+
+          {/* Services */}
+          <div className="opacity-0 animate-[fadeInUp_0.6s_ease-out_0.2s_forwards]">
             <h4 className="text-lg font-semibold mb-6 text-white">Services</h4>
             <ul className="space-y-3">
               {services.map((service, index) => (
@@ -111,19 +104,17 @@ const Footer = () => {
                   <a
                     href={service.href}
                     onClick={(e) => handleNavClick(e, service.href)}
-                    className="text-gray-400 hover:text-blue-300 transition-all duration-300 text-sm"
+                    className="text-gray-400 hover:text-blue-300 transition-all duration-300 text-sm hover:translate-x-1"
                   >
                     {service.name}
                   </a>
                 </li>
               ))}
             </ul>
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-          >
+          </div>
+
+          {/* Social Links */}
+          <div className="opacity-0 animate-[fadeInUp_0.6s_ease-out_0.3s_forwards]">
             <h4 className="text-lg font-semibold mb-6 text-white">Stay Connected</h4>
             <p className="text-gray-400 text-sm mb-6">
               Follow me for updates on my latest projects and tech insights.
@@ -142,8 +133,10 @@ const Footer = () => {
                 </a>
               ))}
             </div>
-          </motion.div>
+          </div>
         </div>
+
+        {/* Bottom Section */}
         <div className="mt-16 pt-8 border-t border-gray-700/50">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <div className="flex items-center space-x-2 text-gray-400 text-sm">
@@ -152,27 +145,40 @@ const Footer = () => {
               <span>All rights reserved.</span>
             </div>
             <div className="flex space-x-6 text-sm">
-              <a href="#" className="text-gray-400 hover:text-blue-300 transition-colors">
+              <a href="#privacy" className="text-gray-400 hover:text-blue-300 transition-colors">
                 Privacy Policy
               </a>
-              <a href="#" className="text-gray-400 hover:text-blue-300 transition-colors">
+              <a href="#terms" className="text-gray-400 hover:text-blue-300 transition-colors">
                 Terms of Service
               </a>
             </div>
           </div>
         </div>
       </div>
-      <motion.button
+
+      {/* Scroll to Top Button */}
+      <button
         onClick={scrollToTop}
-        className={`fixed bottom-8 right-8 z-50 w-12 h-12 bg-gradient-to-r from-blue-600 to-cyan-700 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center ${
+        className={`fixed bottom-8 right-8 z-50 w-12 h-12 bg-gradient-to-r from-blue-600 to-cyan-700 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center hover:scale-110 active:scale-95 ${
           showScrollTop ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'
         }`}
         aria-label="Scroll to top"
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.9 }}
       >
         <ArrowUp className="w-5 h-5" />
-      </motion.button>
+      </button>
+
+      <style jsx>{`
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+      `}</style>
     </footer>
   );
 };

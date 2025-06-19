@@ -120,11 +120,11 @@ export default function About() {
           </div>
 
           {/* Right Side - Photo */}
-          <div className="flex justify-center lg:justify-end">
+          <div className="flex justify-center lg:justify-end mr-30">
             <motion.img
               src={aboutImg}
               alt="Rakshan Shetty"
-              className="relative w-72 h-72 sm:w-80 sm:h-80 lg:w-[400px] lg:h-[400px] object-cover rounded-full border-4 border-blue-600/30 shadow-2xl shadow-blue-600/20"
+              className="relative w-92 h-92 sm:w-80 sm:h-80 lg:w-[450px] lg:h-[450px] object-cover rounded-full border-4 border-blue-600/30 shadow-2xl shadow-blue-600/20 "
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8, delay: 0.2 }}
