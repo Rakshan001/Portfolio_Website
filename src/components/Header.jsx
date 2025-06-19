@@ -11,9 +11,8 @@ export default function Header() {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
 
-      // Update active section
       const sections = ['home', 'about', 'skill', 'projects', 'experience', 'education'];
-      const scrollPos = window.scrollY + window.innerHeight * 0.3; // Adjust for mobile
+      const scrollPos = window.scrollY + window.innerHeight * 0.3;
 
       for (const section of sections) {
         const element = document.getElementById(section);
@@ -42,14 +41,12 @@ export default function Header() {
 
   const handleNavClick = (e, path) => {
     e.preventDefault();
-    setIsMenuOpen(false); // Close menu first
-    setTimeout(() => {
-      const section = document.querySelector(path);
-      if (section) {
-        const offset = section.getBoundingClientRect().top + window.scrollY - 80; // Adjust for header
-        window.scrollTo({ top: offset, behavior: 'smooth' });
-      }
-    }, 300); // Delay to allow menu animation
+    setIsMenuOpen(false);
+    const section = document.querySelector(path);
+    if (section) {
+      const offset = section.getBoundingClientRect().top + window.scrollY - 80;
+      window.scrollTo({ top: offset, behavior: 'smooth' });
+    }
   };
 
   const socialLinks = [
@@ -76,16 +73,9 @@ export default function Header() {
                 className="absolute -inset-2 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 rounded-xl blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                 whileHover={{ scale: 1.1 }}
               />
-              {/* <div className="relative flex items-center space-x-2 px-3 py-2 rounded-xl bg-gradient-to-r from-gray-800/30 to-gray-900/30 backdrop-blur-sm border border-white/10">
-                <Sparkles className="w-5 h-5 text-blue-400" />
-                <span className="text-lg md:text-xl font-bold bg-gradient-to-r from-blue-400 via-cyan-400 to-purple-400 bg-clip-text text-transparent">
-                  Rakshan Shetty
-                </span>
-              </div> */}
-              <span className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-400 via-cyan-400 to-purple-400 bg-clip-text text-transparent ml-0 pl-0">
-  Rakshan Shetty
-</span>
-
+              <span className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-blue-400 via-cyan-400 to-purple-400 bg-clip-text text-transparent">
+                Rakshan Shetty
+              </span>
             </a>
           </motion.div>
 
@@ -102,7 +92,6 @@ export default function Header() {
                       : 'text-gray-300 hover:text-white hover:bg-white/10'
                   }`}
                   onClick={(e) => handleNavClick(e, item.path)}
-                  onTouchStart={(e) => handleNavClick(e, item.path)} // Add touch support
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
@@ -126,14 +115,14 @@ export default function Header() {
                 <motion.a
                   key={index}
                   href={social.href}
-                  className={`p-2 rounded-full text-gray-400 ${social.color} transition-all duration-300 border border-transparent hover:border-white/20`}
+                  className={`p-2 rounded-full text-gray-400 ${social.color} transition-all duration-300 border border-transparent hover:border-white/20 active:bg-gray-800/50`}
                   aria-label={social.label}
                   target="_blank"
                   rel="noopener noreferrer"
                   whileHover={{ scale: 1.1, y: -2 }}
                   whileTap={{ scale: 0.9 }}
                 >
-                  <social.icon size={18} />
+                  <social.icon size={20} />
                 </motion.a>
               ))}
             </div>
@@ -146,7 +135,7 @@ export default function Header() {
             >
               <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-full blur-lg opacity-70 group-hover:opacity-100 transition-opacity duration-300" />
               <div className="relative bg-gradient-to-r from-blue-600 to-cyan-600 text-white px-6 py-2.5 rounded-full font-medium flex items-center space-x-2 border border-white/20 backdrop-blur-sm">
-                <Download size={16} />
+                <Download size={18} />
                 <span>Resume</span>
               </div>
             </motion.a>
@@ -155,7 +144,7 @@ export default function Header() {
           {/* Mobile Menu Button */}
           <motion.button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="lg:hidden relative p-2 rounded-full bg-black/20 backdrop-blur-xl border border-white/10 text-gray-300 hover:text-white transition-colors duration-300"
+            className="lg:hidden relative p-2 rounded-full bg-black/20 backdrop-blur-xl border border-white/10 text-gray-300 hover:text-white active:bg-gray-800/50 transition-colors duration-300"
             aria-label="Toggle menu"
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
@@ -169,7 +158,7 @@ export default function Header() {
                   exit={{ rotate: 90, opacity: 0 }}
                   transition={{ duration: 0.2 }}
                 >
-                  <X size={24} />
+                  <X size={28} />
                 </motion.div>
               ) : (
                 <motion.div
@@ -179,7 +168,7 @@ export default function Header() {
                   exit={{ rotate: -90, opacity: 0 }}
                   transition={{ duration: 0.2 }}
                 >
-                  <Menu size={24} />
+                  <Menu size={28} />
                 </motion.div>
               )}
             </AnimatePresence>
@@ -190,25 +179,25 @@ export default function Header() {
         <AnimatePresence>
           {isMenuOpen && (
             <motion.div
-              className="lg:hidden mt-2 absolute left-0 right-0 mx-4"
+              className="lg:hidden fixed top-16 left-0 right-0 w-full px-4"
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.3, ease: 'easeInOut' }}
+              style={{ willChange: 'opacity, transform' }}
             >
-              <div className="bg-black/50 backdrop-blur-2xl rounded-2xl border border-white/10 shadow-2xl overflow-hidden">
+              <div className="bg-black/50 backdrop-blur-md rounded-2xl border border-white/10 shadow-2xl overflow-hidden">
                 <div className="p-4 space-y-2">
                   {navItems.map((item, index) => (
                     <motion.a
                       key={item.name}
                       href={item.path}
-                      className={`block px-4 py-3 rounded-xl font-medium transition-all duration-300 ${
+                      className={`block px-4 py-3 rounded-xl text-base sm:text-lg font-medium transition-all duration-300 ${
                         activeSection === item.id
                           ? 'text-white bg-gradient-to-r from-blue-500/30 to-cyan-500/30 border border-blue-400/30'
-                          : 'text-gray-300 hover:text-white hover:bg-white/10'
+                          : 'text-gray-300 hover:text-white hover:bg-white/10 active:bg-gray-800/50'
                       }`}
                       onClick={(e) => handleNavClick(e, item.path)}
-                      onTouchStart={(e) => handleNavClick(e, item.path)} // Add touch support
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: index * 0.1 }}
@@ -221,12 +210,12 @@ export default function Header() {
                 </div>
                 <div className="h-px bg-gradient-to-r from-transparent via-white/20 to-transparent mx-4" />
                 <div className="p-4">
-                  <div className="flex items-center justify-center space-x-4 mb-4">
+                  <div className="flex items-center justify-center space-x-6 mb-4">
                     {socialLinks.map((social, index) => (
                       <motion.a
                         key={index}
                         href={social.href}
-                        className={`p-3 rounded-xl ${social.color} border border-white/10 backdrop-blur-sm transition-all duration-300`}
+                        className={`p-3 rounded-xl ${social.color} border border-white/10 backdrop-blur-sm transition-all duration-300 active:bg-gray-800/50`}
                         aria-label={social.label}
                         target="_blank"
                         rel="noopener noreferrer"
@@ -236,7 +225,7 @@ export default function Header() {
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.9 }}
                       >
-                        <social.icon size={20} />
+                        <social.icon size={24} />
                       </motion.a>
                     ))}
                   </div>
@@ -252,8 +241,8 @@ export default function Header() {
                   >
                     <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-xl blur-lg opacity-70 group-hover:opacity-100 transition-opacity duration-300" />
                     <div className="relative bg-gradient-to-r from-blue-600 to-cyan-600 text-white py-3 rounded-xl font-medium flex items-center justify-center space-x-2 border border-white/20 backdrop-blur-sm">
-                      <Download size={18} />
-                      <span>Download Resume</span>
+                      <Download size={20} />
+                      <span className="text-base sm:text-lg">Download Resume</span>
                     </div>
                   </motion.a>
                 </div>
