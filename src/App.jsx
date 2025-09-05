@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import RakshanPreloader from './components/RakshanPreloader';
 import Header from './components/Header';
@@ -6,12 +7,13 @@ import Footer from './components/Footer';
 import Home from './pages/Home';
 import About from './pages/About';
 import Skill from './pages/Skill';
-import Projects from './pages/Projects'; // Fix import
+import Projects from './pages/Projects';
 import Experience from './pages/Experience';
 import Education from './pages/Education';
 import Chatbot from './pages/Chatbot';
+import ProjectDetailsPage from './components/ProjectDetailsPage';
 
-function App() {
+function AppContent() {
   const [showPreloader, setShowPreloader] = useState(true);
 
   const handlePreloaderComplete = () => {
@@ -31,21 +33,45 @@ function App() {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
           >
-            <Header />
-            <main className="flex-grow">
-              <section id="home"><Home /></section>
-              <section id="about"><About /></section>
-              <section id="skill"><Skill /></section>
-              <section id="projects"><Projects /></section>
-              <section id="experience"><Experience /></section>
-              <section id="education"><Education /></section>
-            </main>
-            <Chatbot />
-            <Footer />
+            <Routes>
+              {/* Standalone Project Details Route - No Header/Footer */}
+              <Route 
+                path="/project/:id/:slug" 
+                element={<ProjectDetailsPage />} 
+              />
+              
+              {/* Main Portfolio Routes */}
+              <Route 
+                path="/*" 
+                element={
+                  <>
+                    <Header />
+                    <main className="flex-grow">
+                      <section id="home"><Home /></section>
+                      <section id="about"><About /></section>
+                      <section id="skill"><Skill /></section>
+                      <section id="projects"><Projects /></section>
+                      <section id="experience"><Experience /></section>
+                      <section id="education"><Education /></section>
+                    </main>
+                    <Chatbot />
+                    <Footer />
+                  </>
+                } 
+              />
+            </Routes>
           </motion.div>
         )}
       </AnimatePresence>
     </div>
+  );
+}
+
+function App() {
+  return (
+    <Router>
+      <AppContent />
+    </Router>
   );
 }
 

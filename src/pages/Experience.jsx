@@ -80,17 +80,19 @@ const ExperienceSection = () => {
     "description": "Developed and deployed scalable web and mobile applications using React, React Native, and Node.js. Collaborated with cross-functional teams to deliver high-quality, user-centric software solutions.",
     "achievements": [
       "Built three production-ready web applications serving over 500 users",
+      "Replicated Similar Feature of Google drive in the product software",
+      "Developed NextJs Dynamic Website",
       "Optimized database queries, reducing load times by 40%",
       "Implemented CI/CD pipelines, decreasing deployment time by 60%",
       "Developed a React Native mobile app with integrated chat and video calling features"
     ],
-    "technologies": ["React", "React Native", "Node.js", "Express", "MongoDB", "AWS", "Docker", "Git"],
+    "technologies": ["React", "React Native", "NextJS", "Node.js", "Express", "MongoDB", "AWS", "Docker", "Git"],
     logo: "🏢",
     "color": "from-blue-500 to-cyan-500",
     "impact": {
       "usersServed": 500,
       "performanceImprovement": "40%",
-      "deploymentTimeReduction": "60%"
+      "projectsContributed": 4
     }
   },
   {
@@ -113,7 +115,7 @@ const ExperienceSection = () => {
     "impact": {
       "modelAccuracy": "95%",
       "projectsCompleted": 3,
-      "projectsContributed": 4
+      "projectsContributed": 5
     }
   },
   {
