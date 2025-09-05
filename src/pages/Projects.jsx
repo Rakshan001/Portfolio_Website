@@ -133,14 +133,14 @@ const Projects = () => {
               >
                 {/* Project Header */}
                 <div className="relative p-8 pb-6">
-                  {project.featured && (
+                  {/* {project.featured && (
                     <div className="absolute top-4 right-4">
                       <div className={`px-3 py-1 bg-gradient-to-r ${projectsData[activeCategory].color} rounded-full text-xs font-medium text-white flex items-center gap-1`}>
                         <Star className="w-3 h-3" />
                         Featured
                       </div>
                     </div>
-                  )}
+                  )} */}
                   
                   <div className="flex items-center gap-4 mb-4">
                     <div className="text-5xl">{project.image}</div>

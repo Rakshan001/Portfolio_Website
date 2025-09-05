@@ -317,7 +317,7 @@ const ProjectDetailsPage = () => {
             <div className="bg-gray-900/50 rounded-xl p-6 border border-gray-800">
               <h3 className="text-xl sm:text-2xl font-bold mb-4">Architecture Overview</h3>
               <div className="w-full aspect-[4/3] sm:aspect-video flex items-center justify-center border-2 border-dashed border-gray-600 rounded-lg">
-                <p className="text-gray-400 text-center">Architecture diagram would go here</p>
+                <p className="text-gray-400 text-center">Architecture diagram not available</p>
               </div>
             </div>
           </div>
