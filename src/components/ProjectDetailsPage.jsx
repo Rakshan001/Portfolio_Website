@@ -85,31 +85,31 @@ const ProjectDetailsPage = () => {
   return (
     <div className="min-h-screen bg-black text-white">
       {/* Header Section */}
-      <div className="relative bg-gradient-to-br from-gray-900 via-black to-gray-900 py-20">
+      <div className="relative bg-gradient-to-br from-gray-900 via-black to-gray-900 py-16 md:py-20">
         <div className="absolute inset-0 bg-black opacity-50"></div>
-        <div className="container mx-auto px-6 relative z-10">
-          <div className="flex justify-between items-start mb-8">
+        <div className="container mx-auto px-4 sm:px-6 relative z-10">
+          <div className="flex flex-col sm:flex-row justify-between items-start mb-8">
             <button 
               onClick={() => window.close()}
-              className="flex items-center text-gray-400 hover:text-white transition-colors cursor-pointer"
+              className="flex items-center text-gray-400 hover:text-white transition-colors cursor-pointer mb-4 sm:mb-0"
             >
               <ArrowLeft className="mr-2 h-5 w-5" />
               Go Back
             </button>
           </div>
           
-          <div className="max-w-4xl">
-            <h1 className="text-5xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">
+          <div className="max-w-3xl mx-auto">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">
               {project?.title || 'Untitled Project'}
             </h1>
-            <p className="text-xl text-gray-300 mb-8">{project?.subtitle || 'No subtitle available'}</p>
+            <p className="text-lg sm:text-xl text-gray-300 mb-8">{project?.subtitle || 'No subtitle available'}</p>
             
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-col sm:flex-row flex-wrap gap-4">
               <a
                 href={project?.liveUrl || '#'}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-lg transition-colors cursor-pointer"
+                className="flex items-center justify-center bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-lg transition-colors cursor-pointer"
               >
                 <ExternalLink className="mr-2 h-5 w-5" />
                 Live Demo
@@ -118,7 +118,7 @@ const ProjectDetailsPage = () => {
                 href={project?.githubUrl || '#'}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center bg-gray-700 hover:bg-gray-600 px-6 py-3 rounded-lg transition-colors cursor-pointer"
+                className="flex items-center justify-center bg-gray-700 hover:bg-gray-600 px-6 py-3 rounded-lg transition-colors cursor-pointer"
               >
                 <Github className="mr-2 h-5 w-5" />
                 View Code
@@ -130,13 +130,13 @@ const ProjectDetailsPage = () => {
 
       {/* Navigation Tabs */}
       <div className="sticky top-0 z-40 bg-black/80 backdrop-blur-lg border-b border-gray-800">
-        <div className="container mx-auto px-6">
-          <nav className="flex space-x-8">
+        <div className="container mx-auto px-4 sm:px-6">
+          <nav className="flex flex-wrap justify-center space-x-4 sm:space-x-8">
             {tabs.map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`flex items-center py-4 px-2 border-b-2 transition-colors cursor-pointer ${
+                className={`flex items-center py-4 px-2 border-b-2 transition-colors cursor-pointer text-sm sm:text-base ${
                   activeTab === tab.id
                     ? 'border-blue-500 text-white'
                     : 'border-transparent text-gray-400 hover:text-white'
@@ -151,15 +151,15 @@ const ProjectDetailsPage = () => {
       </div>
 
       {/* Content Sections */}
-      <div className="container mx-auto px-6 py-12">
+      <div className="container mx-auto px-4 sm:px-6 py-12">
         {/* Overview Tab */}
         {activeTab === 'overview' && (
           <div className="space-y-12">
-            <div className="grid md:grid-cols-3 gap-8">
+            <div className="grid md:grid-cols-3 gap-6 sm:gap-8">
               <div className="md:col-span-2 space-y-8">
                 <div>
-                  <h2 className="text-3xl font-bold mb-4">Project Overview</h2>
-                  <p className="text-gray-300 text-lg leading-relaxed mb-6">
+                  <h2 className="text-2xl sm:text-3xl font-bold mb-4">Project Overview</h2>
+                  <p className="text-gray-300 text-base sm:text-lg leading-relaxed mb-6">
                     {project?.description || 'No description available'}
                   </p>
                   <p className="text-gray-400 leading-relaxed">
@@ -167,8 +167,8 @@ const ProjectDetailsPage = () => {
                   </p>
                 </div>
                 <div>
-                  <h3 className="text-2xl font-bold mb-4">Key Features</h3>
-                  <ul className="grid md:grid-cols-2 gap-3">
+                  <h3 className="text-xl sm:text-2xl font-bold mb-4">Key Features</h3>
+                  <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     {project?.features?.map((feature, index) => (
                       <li key={index} className="flex items-start">
                         <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
@@ -182,7 +182,7 @@ const ProjectDetailsPage = () => {
               </div>
               <div className="space-y-6">
                 <div className="bg-gray-900/50 rounded-xl p-6 border border-gray-800">
-                  <h3 className="text-xl font-bold mb-4">Project Details</h3>
+                  <h3 className="text-lg sm:text-xl font-bold mb-4">Project Details</h3>
                   <div className="space-y-4">
                     <div className="flex items-center">
                       <Calendar className="mr-3 h-5 w-5 text-gray-400" />
@@ -208,7 +208,7 @@ const ProjectDetailsPage = () => {
                   </div>
                 </div>
                 <div className="bg-gray-900/50 rounded-xl p-6 border border-gray-800">
-                  <h3 className="text-xl font-bold mb-4">Technologies Used</h3>
+                  <h3 className="text-lg sm:text-xl font-bold mb-4">Technologies Used</h3>
                   <div className="flex flex-wrap gap-2">
                     {project?.technologies?.map((tech, index) => (
                       <span
@@ -227,26 +227,24 @@ const ProjectDetailsPage = () => {
           </div>
         )}
 
-        {/* Gallery Tab - FIXED IMAGE HANDLING */}
+        {/* Gallery Tab */}
         {activeTab === 'gallery' && (
           <div className="space-y-8">
-            <h2 className="text-3xl font-bold">Project Gallery</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold">Project Gallery</h2>
             {project?.images && project.images.length > 0 ? (
               <>
-                {/* Main Image Display - Fixed Container with object-contain */}
+                {/* Main Image Display */}
                 <div className="relative bg-gray-900 rounded-xl border border-gray-800 overflow-hidden">
-                  <div className="h-[500px] w-full flex items-center justify-center bg-gray-900">
+                  <div className="w-full aspect-[4/3] sm:aspect-video flex items-center justify-center bg-gray-900">
                     <img
                       src={project.images[selectedImage]}
                       alt="Project screenshot"
                       className="object-contain w-full h-full max-w-full max-h-full"
                     />
                   </div>
-                  {/* Optional: Remove or keep the gradient overlay */}
-                  <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-black/30 to-transparent pointer-events-none"></div>
                 </div>
                 
-                {/* Thumbnail Gallery - Fixed Thumbnail Containers */}
+                {/* Thumbnail Gallery */}
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                   {project.images.map((image, index) => (
                     <button
@@ -256,7 +254,7 @@ const ProjectDetailsPage = () => {
                         selectedImage === index ? 'border-blue-500' : 'border-gray-700 hover:border-gray-600'
                       }`}
                     >
-                      <div className="h-24 w-full bg-gray-800 flex items-center justify-center">
+                      <div className="w-full aspect-[4/3] bg-gray-800 flex items-center justify-center">
                         <img
                           src={image}
                           alt={`Screenshot ${index + 1}`}
@@ -276,7 +274,7 @@ const ProjectDetailsPage = () => {
         {/* Video Tab */}
         {activeTab === 'video' && (
           <div className="space-y-8">
-            <h2 className="text-3xl font-bold">Project Demo</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold">Project Demo</h2>
             {project?.videoUrl ? (
               <>
                 <div className="relative aspect-video bg-gray-900 rounded-xl overflow-hidden border border-gray-800">
@@ -300,26 +298,26 @@ const ProjectDetailsPage = () => {
         {/* Technical Tab */}
         {activeTab === 'technical' && (
           <div className="space-y-8">
-            <h2 className="text-3xl font-bold">Technical Deep Dive</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold">Technical Deep Dive</h2>
             
-            <div className="grid md:grid-cols-1 gap-8">
-              <div className="bg-gray-900/50 rounded-xl p-8 border border-gray-800">
-                <h3 className="text-2xl font-bold mb-4 text-blue-400">Challenges</h3>
-                <p className="text-gray-300 leading-relaxed">
+            <div className="grid grid-cols-1 gap-6">
+              <div className="bg-gray-900/50 rounded-xl p-6 border border-gray-800">
+                <h3 className="text-xl sm:text-2xl font-bold mb-4 text-blue-400">Challenges</h3>
+                <p className="text-gray-300 leading-relaxed text-sm sm:text-base">
                   {project?.challenges || 'No challenges documented for this project'}
                 </p>
               </div>
-              <div className="bg-gray-900/50 rounded-xl p-8 border border-gray-800">
-                <h3 className="text-2xl font-bold mb-4 text-green-400">Solution</h3>
-                <p className="text-gray-300 leading-relaxed">
+              <div className="bg-gray-900/50 rounded-xl p-6 border border-gray-800">
+                <h3 className="text-xl sm:text-2xl font-bold mb-4 text-green-400">Solution</h3>
+                <p className="text-gray-300 leading-relaxed text-sm sm:text-base">
                   {project?.solution || 'No solution details documented for this project'}
                 </p>
               </div>
             </div>
-            <div className="bg-gray-900/50 rounded-xl p-8 border border-gray-800">
-              <h3 className="text-2xl font-bold mb-4">Architecture Overview</h3>
-              <div className="bg-gray-800 rounded-lg h-64 flex items-center justify-center border-2 border-dashed border-gray-600">
-                <p className="text-gray-400">Architecture diagram would go here</p>
+            <div className="bg-gray-900/50 rounded-xl p-6 border border-gray-800">
+              <h3 className="text-xl sm:text-2xl font-bold mb-4">Architecture Overview</h3>
+              <div className="w-full aspect-[4/3] sm:aspect-video flex items-center justify-center border-2 border-dashed border-gray-600 rounded-lg">
+                <p className="text-gray-400 text-center">Architecture diagram would go here</p>
               </div>
             </div>
           </div>
@@ -327,16 +325,16 @@ const ProjectDetailsPage = () => {
       </div>
 
       {/* Bottom CTA */}
-      <div className="bg-gradient-to-r from-blue-600 to-purple-600 py-16">
-        <div className="container mx-auto px-6 text-center">
-          <h2 className="text-3xl font-bold mb-4">Interested in this project?</h2>
-          <p className="text-xl mb-8 opacity-90">Check out the live demo or explore the source code</p>
-          <div className="flex justify-center gap-4">
+      <div className="bg-gradient-to-r from-blue-600 to-purple-600 py-12 sm:py-16">
+        <div className="container mx-auto px-4 sm:px-6 text-center">
+          <h2 className="text-2xl sm:text-3xl font-bold mb-4">Interested in this project?</h2>
+          <p className="text-base sm:text-xl mb-8 opacity-90">Check out the live demo or explore the source code</p>
+          <div className="flex flex-col sm:flex-row justify-center gap-4">
             <a
               href={project?.liveUrl || '#'}
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors cursor-pointer"
+              className="bg-white text-blue-600 px-6 sm:px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors cursor-pointer"
             >
               View Live Project
             </a>
@@ -344,7 +342,7 @@ const ProjectDetailsPage = () => {
               href={project?.githubUrl || '#'}
               target="_blank"
               rel="noopener noreferrer"
-              className="border border-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors cursor-pointer"
+              className="border border-white px-6 sm:px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors cursor-pointer"
             >
               View on GitHub
             </a>

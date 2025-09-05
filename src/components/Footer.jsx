@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Github, Linkedin, Mail, MapPin, Heart, ArrowUp } from 'lucide-react';
+import { Github, Linkedin, Mail, MapPin, Heart, ArrowUp, Bot, Phone } from 'lucide-react';
 
 const Footer = () => {
   const [showScrollTop, setShowScrollTop] = useState(false);
@@ -17,17 +17,33 @@ const Footer = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  // ✅ NEW: Scroll to Chatbot function
+  const scrollToChatbot = () => {
+    const chatbotSection = document.querySelector('#chatbot'); // Assumes chatbot section has id="chatbot"
+    if (chatbotSection) {
+      chatbotSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   const socialLinks = [
     { icon: Github, href: 'https://github.com/Rakshan001', label: 'GitHub', color: 'hover:text-gray-300' },
     { icon: Linkedin, href: 'https://linkedin.com/in/rakshan-shetty-953864225', label: 'LinkedIn', color: 'hover:text-blue-400' },
     { icon: Mail, href: 'mailto:rakshanshetty2003@gmail.com', label: 'Email', color: 'hover:text-cyan-400' },
+    { icon: Phone, href: 'tel:+919632612163', label: 'Phone', color: 'hover:text-green-400' },
   ];
+
 
   const quickLinks = [
     { name: 'Home', href: '#home' },
     { name: 'About', href: '#about' },
     { name: 'Projects', href: '#projects' },
   ];
+
+    // Call function
+    const handleCall = () => {
+      window.location.href = 'tel:+919632612163'; // Opens phone dialer
+    };
+
 
   const services = [
     { name: 'Full Stack Development', href: '#services' },
@@ -73,6 +89,10 @@ const Footer = () => {
               <div className="flex items-center space-x-3 text-sm text-gray-400 hover:text-gray-300 transition-colors">
                 <Mail className="w-4 h-4 text-cyan-400" />
                 <span>rakshanshetty2003@gmail.com</span>
+              </div>
+              <div className="flex items-center space-x-3 text-sm text-gray-400 hover:text-gray-300 transition-colors">
+                <Phone className="w-4 h-4 text-cyan-400" />
+                <span>+91 9632612163</span>
               </div>
             </div>
           </div>
@@ -155,6 +175,16 @@ const Footer = () => {
           </div>
         </div>
       </div>
+
+      {/* ✅ NEW: Chatbot Scroll Button */}
+      <button
+        onClick={scrollToChatbot}
+        className="fixed bottom-24 right-8 z-50 w-14 h-14 bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center hover:scale-110 active:scale-95 animate-bounce"
+        aria-label="Scroll to Chatbot"
+        title="Chat with AI Assistant"
+      >
+        <Bot className="w-7 h-7" />
+      </button>
 
       {/* Scroll to Top Button */}
       <button

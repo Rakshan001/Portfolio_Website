@@ -1,14 +1,22 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { MessageCircle, Send, Mic, MicOff, Volume2, VolumeX, Bot, User, Zap, Sparkles, Minimize2, Maximize2, Code, Briefcase, Mail, Github } from 'lucide-react';
+import { MessageCircle, Send, Mic, MicOff, Volume2, VolumeX, Bot, User, Zap, Sparkles, Minimize2, Maximize2, Code, Briefcase, Mail, Github, Phone } from 'lucide-react';
+import { contactInfo, getResponse, quickQuestions } from '../data/chatbotData';
 
 const ChatbotSection = () => {
   const [messages, setMessages] = useState([
     {
       id: 1,
-      text: "👋 Hello! I'm your AI assistant. I can help you learn about my skills, projects, experience, and answer any questions you might have. Feel free to ask me anything or use the voice feature!",
+      text: `👋 Hello! I'm Rakshan Shetty's AI assistant. I can help you learn about my skills, projects, experience, and provide contact information. You can reach me at ${contactInfo.email} or ${contactInfo.phone}. Feel free to ask me anything or use the voice feature!`,
       isBot: true,
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-    }
+    },
+    {
+    id: 2,
+    text: `⚠️ Please note: This chatbot provides basic information extracted from my portfolio and may not be fully accurate. For serious inquiries or detailed discussions, please contact me directly via email at ${contactInfo.email}.`,
+    isBot: true,
+    isWarning: true, // Add this flag to identify warning messages
+    timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+  }
   ]);
   const [inputMessage, setInputMessage] = useState('');
   const [isListening, setIsListening] = useState(false);
@@ -21,63 +29,11 @@ const ChatbotSection = () => {
   const [hasInteracted, setHasInteracted] = useState(false);
 
   const messagesEndRef = useRef(null);
+  const messagesContainerRef = useRef(null); // NEW: Reference to messages container
   const inputRef = useRef(null);
   const sectionRef = useRef(null);
   const recognitionRef = useRef(null);
   const synthRef = useRef(null);
-
-  // Enhanced bot responses with more specific portfolio information
-  const getResponse = (message) => {
-    const msg = message.toLowerCase();
-    
-    if (msg.includes('skill') || msg.includes('technology') || msg.includes('tech')) {
-      return "🚀 I'm skilled in JavaScript, React, Node.js, Python, HTML/CSS, SQL, MongoDB, Git, and more. I'm constantly learning new technologies to stay current with industry trends!";
-    }
-    
-    if (msg.includes('project') || msg.includes('work') || msg.includes('portfolio')) {
-      return "💼 I've worked on various projects including web applications, mobile apps, e-commerce platforms, and AI/ML implementations. Each project showcases different aspects of full-stack development!";
-    }
-    
-    if (msg.includes('experience') || msg.includes('background')) {
-      return "🎯 I have experience in full-stack development, UI/UX design, database management, and API development. I enjoy solving complex problems and creating user-friendly applications!";
-    }
-    
-    if (msg.includes('contact') || msg.includes('reach') || msg.includes('hire')) {
-      return "📧 I'd love to connect! You can reach me through the contact section below, LinkedIn, or GitHub. I'm always open to discussing new opportunities and collaborations!";
-    }
-    
-    if (msg.includes('education') || msg.includes('learn') || msg.includes('study')) {
-      return "📚 I believe in continuous learning! I stay updated through online courses, documentation, coding challenges, and hands-on projects. The tech field evolves fast, so I adapt quickly!";
-    }
-    
-    if (msg.includes('hello') || msg.includes('hi') || msg.includes('hey')) {
-      return "👋 Hello there! Great to meet you! I'm excited to tell you about my work and experience. What would you like to know about me?";
-    }
-    
-    if (msg.includes('thank') || msg.includes('thanks')) {
-      return "😊 You're very welcome! I'm here to help and share information about my work. Is there anything else you'd like to know?";
-    }
-    
-    // Default responses
-    const defaultResponses = [
-      "That's an interesting question! I specialize in creating modern web applications with clean, efficient code. What specific aspect would you like to know more about?",
-      "Great question! I'm passionate about using technology to solve real-world problems. My projects range from simple websites to complex full-stack applications.",
-      "I'd be happy to elaborate on that! My development approach focuses on user experience, performance, and maintainable code. What interests you most?",
-      "Thanks for asking! I enjoy working with both frontend and backend technologies, always striving to create seamless user experiences.",
-      "Excellent point! I'm always exploring new technologies and methodologies to improve my development skills. Is there a particular area you'd like to discuss?"
-    ];
-    
-    return defaultResponses[Math.floor(Math.random() * defaultResponses.length)];
-  };
-
-  const quickQuestions = [
-    "What technologies do you know?",
-    "Tell me about your projects",
-    "What's your experience?",
-    "How can I contact you?",
-    "What services do you offer?",
-    "Tell me about your background"
-  ];
 
   // Initialize speech recognition
   useEffect(() => {
@@ -133,15 +89,16 @@ const ChatbotSection = () => {
     return () => observer.disconnect();
   }, []);
 
+  // ✅ FIXED: Only scroll messages container using scrollTop method
   useEffect(() => {
-    if (hasInteracted) {
-      scrollToBottom();
+    if (hasInteracted && messagesContainerRef.current && !isMinimized) {
+      const container = messagesContainerRef.current;
+      // Use setTimeout to ensure DOM is updated with new message
+      setTimeout(() => {
+        container.scrollTop = container.scrollHeight;
+      }, 100);
     }
-  }, [messages, hasInteracted]);
-
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
+  }, [messages, hasInteracted, isMinimized]);
 
   const handleSendMessage = (messageText = null) => {
     const text = messageText || inputMessage.trim();
@@ -162,7 +119,7 @@ const ChatbotSection = () => {
     setTimeout(() => {
       const botResponse = {
         id: Date.now() + 1,
-        text: getResponse(text),
+        text: getResponse(text, contactInfo),
         isBot: true,
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
       };
@@ -173,9 +130,9 @@ const ChatbotSection = () => {
         playNotificationSound();
       }
 
-      // Optional: Speak the response only if voice output is enabled and it's a voice conversation
-      if (voiceOutputEnabled && synthRef.current && botResponse.text.length < 200 && (messageText !== inputMessage || isListening)) {
-        const utterance = new SpeechSynthesisUtterance(botResponse.text.replace(/[👋🚀💼🎯📧📚😊]/g, ''));
+      // Optional: Speak the response only if voice output is enabled
+      if (voiceOutputEnabled && synthRef.current && botResponse.text.length < 200) {
+        const utterance = new SpeechSynthesisUtterance(botResponse.text.replace(/[👋🚀💼🎯📧📚😊🏢🏆🥇💻🌐📞]/g, ''));
         utterance.rate = 0.8;
         utterance.pitch = 1;
         synthRef.current.speak(utterance);
@@ -204,20 +161,23 @@ const ChatbotSection = () => {
   };
 
   const playNotificationSound = () => {
-    // Create a subtle notification sound
-    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-    const oscillator = audioContext.createOscillator();
-    const gainNode = audioContext.createGain();
-    
-    oscillator.connect(gainNode);
-    gainNode.connect(audioContext.destination);
-    
-    oscillator.frequency.value = 800;
-    gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
-    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
-    
-    oscillator.start(audioContext.currentTime);
-    oscillator.stop(audioContext.currentTime + 0.3);
+    try {
+      const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      const oscillator = audioContext.createOscillator();
+      const gainNode = audioContext.createGain();
+      
+      oscillator.connect(gainNode);
+      gainNode.connect(audioContext.destination);
+      
+      oscillator.frequency.value = 800;
+      gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
+      
+      oscillator.start(audioContext.currentTime);
+      oscillator.stop(audioContext.currentTime + 0.3);
+    } catch (error) {
+      console.log('Audio context not available');
+    }
   };
 
   const handleKeyPress = (e) => {
@@ -230,7 +190,7 @@ const ChatbotSection = () => {
   const clearChat = () => {
     setMessages([{
       id: 1,
-      text: "👋 Chat cleared! I'm here to help you learn about my skills, projects, and experience. What would you like to know?",
+      text: `👋 Chat cleared! I'm here to help you learn about Rakshan's skills, projects, and experience. Contact: ${contactInfo.email} | ${contactInfo.phone}. What would you like to know?`,
       isBot: true,
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
     }]);
@@ -238,7 +198,7 @@ const ChatbotSection = () => {
   };
 
   return (
-    <section ref={sectionRef} className="bg-gradient-to-br from-black via-gray-900 to-black relative overflow-hidden py-20">
+    <section ref={sectionRef} id='chatbot' className="bg-gradient-to-br from-black via-gray-900 to-black relative overflow-hidden py-20">
       {/* Background Effects */}
       <div className="absolute inset-0">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-cyan-500/5 rounded-full blur-3xl animate-pulse"></div>
@@ -276,7 +236,7 @@ const ChatbotSection = () => {
                 : 'none'
             }}
           >
-            {/* Chat Header */}
+            {/* Chat Header - FIXED POSITION */}
             <div className="flex items-center justify-between p-4 bg-gray-800/50 border-b border-gray-700/50">
               <div className="flex items-center gap-3">
                 <div className="relative">
@@ -286,7 +246,7 @@ const ChatbotSection = () => {
                   <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-gray-900 animate-pulse"></div>
                 </div>
                 <div>
-                  <h3 className="text-white font-semibold">Portfolio Assistant</h3>
+                  <h3 className="text-white font-semibold">Rakshan's Assistant</h3>
                   <p className="text-xs text-gray-400">
                     {isListening ? '🎤 Listening...' : isTyping ? '⌨️ Typing...' : '🟢 Online'}
                     {voiceInputEnabled && <span className="ml-2 text-cyan-400">🎤</span>}
@@ -343,8 +303,12 @@ const ChatbotSection = () => {
 
             {!isMinimized && (
               <>
-                {/* Messages Area */}
-                <div className="h-96 overflow-y-auto p-4 space-y-4 scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-transparent">
+                {/* ✅ FIXED: Messages Area - Only this container scrolls */}
+                <div 
+                  ref={messagesContainerRef}
+                  className="h-96 overflow-y-auto p-4 space-y-4 scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-transparent"
+                  style={{ scrollBehavior: 'smooth' }}
+                >
                   {messages.map((message) => (
                     <div
                       key={message.id}
@@ -383,10 +347,10 @@ const ChatbotSection = () => {
                       </div>
                     </div>
                   )}
-                  <div ref={messagesEndRef} />
+                  {/* ✅ REMOVED: No longer needed since we use scrollTop method */}
                 </div>
 
-                {/* Voice Controls Info */}
+                {/* Voice Controls Info - FIXED POSITION */}
                 <div className="px-4 py-2 bg-gray-900/30 border-t border-gray-700/50">
                   <div className="flex items-center justify-center gap-4 text-xs text-gray-400">
                     <div className={`flex items-center gap-1 ${voiceInputEnabled ? 'text-cyan-400' : 'text-gray-500'}`}>
@@ -400,11 +364,11 @@ const ChatbotSection = () => {
                   </div>
                 </div>
 
-                {/* Quick Questions */}
+                {/* Quick Questions - FIXED POSITION */}
                 <div className="px-4 py-2 border-t border-gray-700/50">
                   <p className="text-xs text-gray-500 mb-2">Quick questions:</p>
                   <div className="flex flex-wrap gap-2">
-                    {quickQuestions.slice(0, 3).map((question, index) => (
+                    {quickQuestions.slice(0, 4).map((question, index) => (
                       <button
                         key={index}
                         onClick={() => handleSendMessage(question)}
@@ -416,7 +380,7 @@ const ChatbotSection = () => {
                   </div>
                 </div>
 
-                {/* Input Area */}
+                {/* Input Area - FIXED POSITION */}
                 <div className="p-4 bg-gray-800/30 border-t border-gray-700/50">
                   {isListening && (
                     <div className="mb-3 flex items-center justify-center gap-2 text-cyan-400">
@@ -438,7 +402,7 @@ const ChatbotSection = () => {
                         value={inputMessage}
                         onChange={(e) => setInputMessage(e.target.value)}
                         onKeyPress={handleKeyPress}
-                        placeholder="Ask me about my skills, projects, or experience..."
+                        placeholder="Ask me about my skills, projects, contact info, or experience..."
                         className="w-full px-4 py-3 bg-gray-700/50 text-white rounded-2xl border border-gray-600/50 focus:border-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/20 transition-all placeholder-gray-400"
                         disabled={isListening}
                       />
@@ -482,33 +446,33 @@ const ChatbotSection = () => {
           </div>
         </div>
 
-        {/* Features Section */}
+        {/* Features Section - STAYS FIXED */}
         <div className={`mt-16 transform transition-all duration-1000 delay-400 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
             {[
               {
-                icon: <Mic className="w-6 h-6" />,
-                title: "Voice Recognition",
-                description: "Speak naturally and I'll understand your questions",
-                color: "from-cyan-500 to-blue-600"
-              },
-              {
-                icon: <Code className="w-6 h-6" />,
-                title: "Technical Knowledge",
-                description: "Ask about my coding skills and tech stack",
-                color: "from-blue-500 to-purple-600"
-              },
-              {
-                icon: <Briefcase className="w-6 h-6" />,
-                title: "Project Details",
-                description: "Learn about my portfolio and work experience",
-                color: "from-purple-500 to-pink-600"
+                icon: <Phone className="w-6 h-6" />,
+                title: "Direct Contact",
+                description: `${contactInfo.phone}`,
+                color: "from-green-500 to-emerald-600"
               },
               {
                 icon: <Mail className="w-6 h-6" />,
-                title: "Contact Info",
-                description: "Get my contact details and connect with me",
-                color: "from-pink-500 to-red-600"
+                title: "Email Me",
+                description: `${contactInfo.email}`,
+                color: "from-blue-500 to-cyan-600"
+              },
+              {
+                icon: <Code className="w-6 h-6" />,
+                title: "Technical Skills",
+                description: "Ask about my coding skills and tech stack",
+                color: "from-purple-500 to-blue-600"
+              },
+              {
+                icon: <Briefcase className="w-6 h-6" />,
+                title: "Project Portfolio",
+                description: "Learn about my work and experience",
+                color: "from-orange-500 to-pink-600"
               }
             ].map((feature, index) => (
               <div

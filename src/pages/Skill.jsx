@@ -20,6 +20,7 @@ const SkillsSection = () => {
   const [activeFilter, setActiveFilter] = useState('all');
   const [isVisible, setIsVisible] = useState(false);
   const [hoveredCategory, setHoveredCategory] = useState(null);
+  const [visibleSkillsCount, setVisibleSkillsCount] = useState(6);
   const sectionRef = useRef(null);
 
   useEffect(() => {
@@ -226,34 +227,6 @@ const SkillsSection = () => {
       borderColor: 'border-purple-500/30',
       status: 'learning'
     },
-    // {
-    //   name: 'Java',
-    //   category: 'backend',
-    //   IconComponent: SiJava,
-    //   iconColor: 'text-red-500',
-    //   experience: '0.5+ years',
-    //   projects: 1,
-    //   description: 'Object-oriented programming',
-    //   features: ['Spring Boot', 'Maven', 'JPA', 'Microservices'],
-    //   color: 'from-red-400 to-orange-600',
-    //   bgColor: 'bg-red-500/10',
-    //   borderColor: 'border-red-500/30',
-    //   status: 'learning'
-    // },
-    // {
-    //   name: 'C',
-    //   category: 'backend',
-    //   IconComponent: SiC,
-    //   iconColor: 'text-blue-600',
-    //   experience: '1+ years',
-    //   projects: 4,
-    //   description: 'System programming language',
-    //   features: ['Pointers', 'Memory Management', 'Data Structures', 'Algorithms'],
-    //   color: 'from-blue-400 to-indigo-600',
-    //   bgColor: 'bg-blue-500/10',
-    //   borderColor: 'border-blue-500/30',
-    //   status: 'proficient'
-    // },
     {
       name: 'Go',
       category: 'backend',
@@ -391,7 +364,7 @@ const SkillsSection = () => {
     {
       name: 'RPA (UiPath)',
       category: 'ai',
-      IconComponent: Brain, // Using Lucide's Brain icon for RPA (since react-icons SiUiPath doesn't exist)
+      IconComponent: Brain,
       iconColor: 'text-blue-400',
       experience: '0.8+ years',
       projects: 3,
@@ -409,12 +382,11 @@ const SkillsSection = () => {
       status: 'learning'
     },
 
-
     // Full Stack Technologies
     {
       name: 'MERN Stack',
       category: 'fullstack',
-      IconComponent: SiReact, // Using React as representative icon
+      IconComponent: SiReact,
       iconColor: 'text-cyan-400',
       experience: '1+ years',
       projects: 2,
@@ -443,6 +415,12 @@ const SkillsSection = () => {
   const filteredSkills = activeFilter === 'all' 
     ? skillsData 
     : skillsData.filter(skill => skill.category === activeFilter);
+
+  const displayedSkills = filteredSkills.slice(0, visibleSkillsCount);
+
+  const handleLoadMore = () => {
+    setVisibleSkillsCount(prev => prev + 6);
+  };
 
   const getStatusColor = (status) => {
     switch (status) {
@@ -507,7 +485,7 @@ const SkillsSection = () => {
             return (
               <button
                 key={category.id}
-                onClick={() => setActiveFilter(category.id)}
+                onClick={() => {setActiveFilter(category.id); setVisibleSkillsCount(6);}}
                 onMouseEnter={() => setHoveredCategory(category.id)}
                 onMouseLeave={() => setHoveredCategory(null)}
                 className={`group relative flex items-center gap-3 px-6 py-3 rounded-2xl font-medium transition-all duration-300 ${
@@ -530,7 +508,7 @@ const SkillsSection = () => {
         {/* Skills Grid */}
         <div className={`transform transition-all duration-700 delay-400 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {filteredSkills.map((skill, index) => {
+            {displayedSkills.map((skill, index) => {
               const { IconComponent } = skill;
               return (
                 <div
@@ -611,11 +589,25 @@ const SkillsSection = () => {
                   <div className={`absolute inset-0 bg-gradient-to-br ${skill.color} opacity-0 group-hover:opacity-5 transition-opacity duration-300`}></div>
                   
                   {/* Border Glow */}
-                  <div className={`absolute inset-0 rounded-3xl border-2 border-transparent bg-gradient-to-r ${skill.color} opacity-0 group-hover:opacity-20 transition-opacity duration-300`}></div>
+                  <div className={`absolute insetWashingtonPost.com inset-0 rounded-3xl border-2 border-transparent bg-gradient-to-r ${skill.color} opacity-0 group-hover:opacity-20 transition-opacity duration-300`}></div>
                 </div>
               );
             })}
           </div>
+
+          {/* Load More Button for Mobile */}
+          {visibleSkillsCount < filteredSkills.length && (
+            <div className="mt-8 flex justify-center md:hidden">
+              <button
+                onClick={handleLoadMore}
+                className="group inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl font-semibold text-white transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-purple-500/25"
+              >
+                <Play className="w-5 h-5 group-hover:scale-110 transition-transform" />
+                Load More
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </button>
+            </div>
+          )}
         </div>
 
         {/* Footer Stats */}
@@ -628,12 +620,6 @@ const SkillsSection = () => {
                 </div>
                 <div className="text-gray-400 text-sm">Technologies</div>
               </div>
-              {/* <div className="group">
-                <div className="text-4xl font-black bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent mb-2">
-                  {skillsData.reduce((acc, skill) => acc + skill.projects, 0)}+
-                </div>
-                <div className="text-gray-400 text-sm">Projects Built</div>
-              </div> */}
               <div className="group">
                 <div className="text-4xl font-black bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent mb-2">
                   4+
