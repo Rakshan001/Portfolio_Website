@@ -447,7 +447,7 @@ const ChatbotSection = () => {
         </div>
 
         {/* Features Section - STAYS FIXED */}
-        <div className={`mt-16 transform transition-all duration-1000 delay-400 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
+        {/* <div className={`mt-16 transform transition-all duration-1000 delay-400 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
             {[
               {
@@ -487,7 +487,7 @@ const ChatbotSection = () => {
               </div>
             ))}
           </div>
-        </div>
+        </div> */}
       </div>
 
       {/* Floating Emojis */}
