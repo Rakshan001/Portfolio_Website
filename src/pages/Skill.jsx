@@ -12,7 +12,6 @@ import {
   SiPhp, SiC, SiGo, SiDjango, SiFlask, 
   SiMysql, SiSelenium
 } from 'react-icons/si';
-
 import { TbBrandReactNative } from "react-icons/tb";
 
 const SkillsSection = () => {
@@ -155,7 +154,6 @@ const SkillsSection = () => {
       borderColor: 'border-purple-500/30',
       status: 'expert'
     },
-
     // Backend Technologies
     {
       name: 'Node.js',
@@ -241,7 +239,6 @@ const SkillsSection = () => {
       borderColor: 'border-cyan-500/30',
       status: 'learning'
     },
-
     // Database Technologies
     {
       name: 'MongoDB',
@@ -285,7 +282,6 @@ const SkillsSection = () => {
       borderColor: 'border-blue-500/30',
       status: 'expert'
     },
-
     // Mobile Development
     {
       name: 'React Native',
@@ -301,7 +297,6 @@ const SkillsSection = () => {
       borderColor: 'border-cyan-500/30',
       status: 'learning'
     },
-
     // DevOps & Tools
     {
       name: 'Git',
@@ -345,7 +340,6 @@ const SkillsSection = () => {
       borderColor: 'border-cyan-500/30',
       status: 'proficient'
     },
-
     // AI/ML & Automation
     {
       name: 'TensorFlow',
@@ -381,7 +375,6 @@ const SkillsSection = () => {
       borderColor: 'border-blue-500/30',
       status: 'learning'
     },
-
     // Full Stack Technologies
     {
       name: 'MERN Stack',
@@ -416,6 +409,7 @@ const SkillsSection = () => {
     ? skillsData 
     : skillsData.filter(skill => skill.category === activeFilter);
 
+  // Use visibleSkillsCount only for mobile
   const displayedSkills = filteredSkills.slice(0, visibleSkillsCount);
 
   const handleLoadMore = () => {
@@ -433,7 +427,6 @@ const SkillsSection = () => {
 
   return (
     <section ref={sectionRef} className="min-h-screen bg-gradient-to-br from-black via-gray-950 to-slate-900 relative overflow-hidden">
-      
       {/* Animated Mesh Background */}
       <div className="absolute inset-0">
         <svg className="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
@@ -452,7 +445,6 @@ const SkillsSection = () => {
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 py-20">
-        
         {/* Header */}
         <div className={`text-center mb-16 transform transition-all duration-1000 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
           <div className="inline-flex items-center gap-2 mb-6 px-4 py-2 bg-white/5 rounded-full border border-white/10 backdrop-blur-sm">
@@ -508,7 +500,7 @@ const SkillsSection = () => {
         {/* Skills Grid */}
         <div className={`transform transition-all duration-700 delay-400 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {displayedSkills.map((skill, index) => {
+            {(window.innerWidth < 768 ? displayedSkills : filteredSkills).map((skill, index) => {
               const { IconComponent } = skill;
               return (
                 <div
@@ -589,7 +581,7 @@ const SkillsSection = () => {
                   <div className={`absolute inset-0 bg-gradient-to-br ${skill.color} opacity-0 group-hover:opacity-5 transition-opacity duration-300`}></div>
                   
                   {/* Border Glow */}
-                  <div className={`absolute insetWashingtonPost.com inset-0 rounded-3xl border-2 border-transparent bg-gradient-to-r ${skill.color} opacity-0 group-hover:opacity-20 transition-opacity duration-300`}></div>
+                  <div className={`absolute inset-0 rounded-3xl border-2 border-transparent bg-gradient-to-r ${skill.color} opacity-0 group-hover:opacity-20 transition-opacity duration-300`}></div>
                 </div>
               );
             })}
@@ -613,7 +605,7 @@ const SkillsSection = () => {
         {/* Footer Stats */}
         <div className={`mt-20 transform transition-all duration-1000 delay-600 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
           <div className="text-center bg-gradient-to-r from-black/50 to-gray-900/50 backdrop-blur-xl rounded-3xl border border-white/10 p-12">
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-8 ">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-8">
               <div className="group">
                 <div className="text-4xl font-black bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent mb-2">
                   {skillsData.length}+
