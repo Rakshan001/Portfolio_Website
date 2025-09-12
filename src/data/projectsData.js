@@ -1,4 +1,5 @@
 import noImageAvailable from '../assets/images/Image_not_available.png';
+import blindVoteProjectimages from "../assets/projects_images/BlindVotingSystem"
 export const projectsData = {
   fullstack: {
     title: 'Full Stack Applications',
@@ -345,10 +346,19 @@ export const projectsData = {
         longDescription: 'A comprehensive AI-driven voting platform that empowers visually impaired individuals to participate in elections independently. The system offers multi-language support (Hindi, English, Kannada), uses Google Text-to-Speech for communication, and provides a complete voice-guided voting experience. Users authenticate with Aadhaar numbers, listen to candidate names, confirm their selections through voice commands, and complete the voting process with full audio feedback and confirmation steps.',
         image: '🗳️',
         images: [
-          noImageAvailable,
-          noImageAvailable,
-          noImageAvailable,
-          noImageAvailable
+            blindVoteProjectimages.img1,
+            blindVoteProjectimages.img2,
+            blindVoteProjectimages.img3,
+            blindVoteProjectimages.img4,
+            blindVoteProjectimages.img5,
+            blindVoteProjectimages.img6,
+            blindVoteProjectimages.img7,
+
+
+          // noImageAvailable,
+          // noImageAvailable,
+          // noImageAvailable,
+          // noImageAvailable
         ],
         tech: ['Python', 'Streamlit', 'Google TTS', 'Speech Recognition', 'NLP'],
         technologies: ['Python', 'Streamlit', 'Google Text-to-Speech', 'Speech Recognition', 'Natural Language Processing', 'SQLite', 'Audio Processing'],
