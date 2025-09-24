@@ -489,21 +489,27 @@ const ExperienceSection = () => {
 
                       {/* Impact Metrics */}
                       <div>
-                        <h4 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-                          <TrendingUp className="w-5 h-5 text-blue-400" />
-                          Impact & Results
-                        </h4>
-                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                          {Object.entries(exp.impact).map(([key, value]) => (
-                            <div key={key} className="text-center p-4 bg-gray-800/50 rounded-xl border border-gray-700/50">
-                              <div className={`text-2xl font-bold bg-gradient-to-r ${exp.color} bg-clip-text text-transparent mb-1`}>
-                                {value}
-                              </div>
-                              <div className="text-xs text-gray-400 capitalize">{key}</div>
+                      <h4 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                        <TrendingUp className="w-5 h-5 text-blue-400" />
+                        Impact & Results
+                      </h4>
+                      <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
+                        {Object.entries(exp.impact).map(([key, value]) => (
+                          <div 
+                            key={key} 
+                            className="text-center p-3 sm:p-4 bg-gray-800/50 rounded-xl border border-gray-700/50 min-w-0"
+                          >
+                            <div className={`text-lg sm:text-2xl font-bold bg-gradient-to-r ${exp.color} bg-clip-text text-transparent mb-1 break-words hyphens-auto leading-tight`}>
+                              {value}
                             </div>
-                          ))}
-                        </div>
+                            <div className="text-xs text-gray-400 capitalize break-words hyphens-auto leading-tight">
+                              {key.replace(/([A-Z])/g, ' $1').trim()}
+                            </div>
+                          </div>
+                        ))}
                       </div>
+                    </div>
+
                     </div>
                   </div>
                 ))

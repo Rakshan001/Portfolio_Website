@@ -6,15 +6,14 @@ const ChatbotSection = () => {
   const [messages, setMessages] = useState([
     {
       id: 1,
-      text: `👋 Hello! I'm Rakshan Shetty's AI assistant. I can help you learn about my skills, projects, experience, and provide contact information. You can reach me at ${contactInfo.email} or ${contactInfo.phone}. Feel free to ask me anything or use the voice feature!`,
-      isBot: true,
-      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-    },
-    {
-    id: 2,
-    text: `⚠️ Please note: This chatbot provides basic information extracted from my portfolio and may not be fully accurate. For serious inquiries or detailed discussions, please contact me directly via email at ${contactInfo.email}.`,
+    text: `Hi! I'm Rakshan's assistant. Ask me anything about his work and experience.`,
     isBot: true,
-    isWarning: true, // Add this flag to identify warning messages
+    timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+  },
+  {
+    id: 2,
+    text: `⚠️ Responses may not be fully accurate. For detailed inquiries, contact ${contactInfo.email}`,
+    isBot: true,
     timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
   }
   ]);
