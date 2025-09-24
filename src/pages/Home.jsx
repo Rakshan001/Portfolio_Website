@@ -117,7 +117,7 @@ export default function Home() {
             variants={descriptionVariants}
             className="text-base sm:text-lg lg:text-xl text-gray-400 leading-relaxed"
           >
-            Fresh <span className="text-blue-400 font-semibold">AIML B.E graduate (2025)</span> with a passion for
+            <span className="text-blue-400 font-semibold">AIML B.E graduate (2025)</span> with a passion for
             building innovative web applications and intelligent systems.
           </motion.p>
           <div className="flex flex-wrap justify-center gap-3">
